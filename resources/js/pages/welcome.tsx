@@ -17,6 +17,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import Features from '@/components/landing/features';
 import Footer from '@/components/landing/footer';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { PRIZE_IMAGES, TRANSLATIONS } from '@/constants';
 import { dashboard, login, register } from '@/routes';
 import type { AppSettings, Language } from '@/types/app';
@@ -40,7 +41,16 @@ const PUBLIC_CHECK_AVAILABILITY_URL = '/tickets/public-check-availability';
 
 export default function Welcome() {
     const { auth } = usePage().props;
-    const language: Language = 'en';
+    const [language, setLanguage] = useState<Language>(() => {
+        const stored = localStorage.getItem('language');
+        return stored === 'am' ? 'am' : 'en';
+    });
+
+    const updateLanguage = (nextLanguage: Language): void => {
+        setLanguage(nextLanguage);
+        localStorage.setItem('language', nextLanguage);
+        document.cookie = `language=${nextLanguage};path=/;max-age=${365 * 24 * 60 * 60};SameSite=Lax`;
+    };
 
     const pageSettings = usePage().props.settings as AppSettings;
     const page = usePage();
@@ -433,6 +443,12 @@ export default function Welcome() {
                                     {language === 'en' ? 'Lucky Numbers' : 'እድለኛ ቁጥሮች'}
                                 </a>
                             </div>
+
+                            <LanguageSwitcher
+                                language={language}
+                                onLanguageChange={updateLanguage}
+                                className="hidden sm:inline-flex"
+                            />
 
                             {auth.user ? (
                                 <Link

@@ -72,7 +72,7 @@ export default function Dashboard() {
     const [paymentStep, setPaymentStep] = useState<PaymentStep>('IDLE');
     const [showTicketModal, setShowTicketModal] = useState(false);
     const [showWinnerCelebration, setShowWinnerCelebration] = useState(true);
-    const paymentAmount = 2000;
+    const paymentAmount = 1500;
     const [paymentReceipt, setPaymentReceipt] = useState<File | null>(null);
     const [paymentError, setPaymentError] = useState<string | null>(null);
 
@@ -641,12 +641,12 @@ export default function Dashboard() {
                                                                 </p>
                                                                 <div className="mb-2 flex items-center justify-between">
                                                                     <p className="font-mono text-lg font-bold tracking-wide text-navy">
-                                                                        0907525801
+                                                                        0955885207
                                                                     </p>
                                                                     <button
                                                                         onClick={() =>
                                                                             copyToClipboard(
-                                                                                '0907525801',
+                                                                                '0955885207',
                                                                             )
                                                                         }
                                                                         className="rounded-lg p-1.5 text-blue-600 transition-colors hover:bg-blue-100"
@@ -663,7 +663,10 @@ export default function Dashboard() {
                                                                         t.acc_name
                                                                     }
                                                                     :
-                                                                    Letarik Tamrat Abera
+                                                                    yirgalem
+                                                                </p>
+                                                                <p className="mt-2 inline-flex items-center rounded-lg bg-royal px-3 py-1.5 text-sm font-black text-white">
+                                                                    1,500 Birr
                                                                 </p>
                                                             </div>
                                                             <button
@@ -716,8 +719,8 @@ export default function Dashboard() {
                                                                 </p>
                                                                 <input
                                                                     type="number"
-                                                                    min={2000}
-                                                                    max={2000}
+                                                                    min={1500}
+                                                                    max={1500}
                                                                     inputMode="numeric"
                                                                     value={paymentAmount}
                                                                     disabled={ true }
