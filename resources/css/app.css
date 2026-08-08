@@ -1,0 +1,252 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans:
+        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-royal: #2875f7;
+    --color-navy: #1d2878;
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+    --background: #f6f8fd;
+    --foreground: #16204d;
+    --card: #ffffff;
+    --card-foreground: #16204d;
+    --popover: #ffffff;
+    --popover-foreground: #16204d;
+    --primary: #2875f7;
+    --primary-foreground: #ffffff;
+    --secondary: #e6edfd;
+    --secondary-foreground: #1d2878;
+    --muted: #eef2f9;
+    --muted-foreground: #5b6472;
+    --accent: #dbe7fd;
+    --accent-foreground: #1d2878;
+    --destructive: oklch(0.55 0.22 25);
+    --destructive-foreground: oklch(0.98 0.005 115);
+    --border: #dce3f0;
+    --input: #dce3f0;
+    --ring: #2875f7;
+    --chart-1: #2875f7;
+    --chart-2: #1d2878;
+    --chart-3: #5b9bff;
+    --chart-4: #0e4bc4;
+    --chart-5: #7cb0ff;
+    --radius: 0.75rem;
+    --sidebar: #f5f8fe;
+    --sidebar-foreground: #16204d;
+    --sidebar-primary: #2875f7;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #e6edfd;
+    --sidebar-accent-foreground: #1d2878;
+    --sidebar-border: #dce3f0;
+    --sidebar-ring: #2875f7;
+}
+
+.dark {
+    --background: #0b1023;
+    --foreground: #e7edfb;
+    --card: #121a3a;
+    --card-foreground: #e7edfb;
+    --popover: #121a3a;
+    --popover-foreground: #e7edfb;
+    --primary: #2875f7;
+    --primary-foreground: #ffffff;
+    --secondary: #1b2a5e;
+    --secondary-foreground: #e7edfb;
+    --muted: #1b2440;
+    --muted-foreground: #8e9ac4;
+    --accent: #1e2e66;
+    --accent-foreground: #e7edfb;
+    --destructive: oklch(0.65 0.20 25);
+    --destructive-foreground: oklch(0.95 0.01 85);
+    --border: #242f56;
+    --input: #242f56;
+    --ring: #2875f7;
+    --chart-1: #5b9bff;
+    --chart-2: #7cb0ff;
+    --chart-3: #1d2878;
+    --chart-4: #2875f7;
+    --chart-5: #0e4bc4;
+    --sidebar: #0e1530;
+    --sidebar-foreground: #e7edfb;
+    --sidebar-primary: #2875f7;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #182447;
+    --sidebar-accent-foreground: #e7edfb;
+    --sidebar-border: #242f56;
+    --sidebar-ring: #2875f7;
+}
+
+@layer base {
+    * {
+        @apply border-border;
+        border-radius: 0 !important;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+
+    /* Scrollbar styling */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #b9c9ea transparent;
+    }
+
+    *::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background: #b9c9ea;
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background: #9db4e0;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #9db4e0;
+    }
+}
+
+@layer utilities {
+    @keyframes scroll {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+    .animate-scroll {
+        animation: scroll 30s linear infinite;
+        will-change: transform;
+    }
+
+    .animate-scroll:hover {
+        animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .animate-scroll {
+            animation: none;
+            transform: translateX(0);
+        }
+    }
+
+    /* Custom gradient utilities inspired by welcome page */
+    .gradient-navy-dark {
+        background: linear-gradient(135deg, #0b1023, #1d2878);
+    }
+
+    .gradient-royal-warm {
+        background: linear-gradient(135deg, #2875f7, #5b9bff);
+    }
+
+    .gradient-stone-subtle {
+        background: linear-gradient(135deg, oklch(0.95 0.01 85), oklch(0.90 0.02 95));
+    }
+
+    /* Enhanced button styles */
+    .btn-royal {
+        @apply bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98];
+    }
+
+    .btn-navy {
+        @apply bg-gradient-to-r from-[#1d2878] to-[#2875f7] hover:from-[#16205e] hover:to-[#1d5fd8] text-white shadow-lg shadow-[#1d2878]/25 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98];
+    }
+
+    /* Enhanced card styles */
+    .card-royal {
+        @apply bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-blue-100/50;
+    }
+
+    .card-navy {
+        @apply bg-gradient-to-br from-indigo-50 to-blue-100 border-blue-200 shadow-blue-100/50;
+    }
+
+    /* Text gradients */
+    .text-gradient-royal {
+        background: linear-gradient(135deg, #2875f7, #1d2878);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-navy {
+        background: linear-gradient(135deg, #5b9bff, #1d2878);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
