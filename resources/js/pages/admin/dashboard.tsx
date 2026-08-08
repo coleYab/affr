@@ -52,7 +52,7 @@ export default function Dashboard({
     const t = ADMIN_TRANSLATIONS[language];
 
     const currentPot = useMemo(() => {
-        return Math.max(claimedTickets, 0) * 2000;
+        return Math.max(claimedTickets, 0) * 1500;
     }, [claimedTickets]);
 
     const pendingPayments = paymentRequests;

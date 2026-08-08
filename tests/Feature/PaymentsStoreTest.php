@@ -64,4 +64,6 @@ it('updates a payment request with a webp receipt upload', function () {
 
     expect($payment->receiptUrl)->toStartWith('/storage/receipts/');
     Storage::disk('public')->assertExists(str_replace('/storage/', '', $payment->receiptUrl));
+
+    expect((float) $payment->amount)->toBe(1500.0);
 });
