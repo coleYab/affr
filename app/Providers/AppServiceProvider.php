@@ -96,7 +96,7 @@ class AppServiceProvider extends ServiceProvider
                 'nextDrawDateAm' => $settings->next_draw_date_am,
                 'potValue' => $settings->pot_value,
                 'totalMembers' => $settings->total_members,
-                'carsDelivered' => $settings->cars_delivered,
+                'iphonesDelivered' => $settings->iphones_delivered,
                 'trustScore' => $settings->trust_score,
             ];
         });

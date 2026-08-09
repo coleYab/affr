@@ -6,22 +6,22 @@ export const TRANSLATIONS = {
         back: "Back",
     },
     nav: { home: "Home", how: "How It Works", join: "Join Now", login: "Login", register: "Register", logout: "Logout", dashboard: "Dashboard", secure: "Secure Session", profile: "Profile" },
-    hero: { subtitle: "NEXT DRAW IN", subtitle_today: "TODAY ONE LUCKY PERSON TAKES THE CAR", title1: "Save Together.", title2: "Win Your Dream Car.", desc: "AfroEqub blends Ethiopia's trusted equb tradition with secure digital payments. Contribute monthly, claim your lucky number, and drive away a brand-new car in a fully transparent live draw.", cta: "Claim Your Lucky Number", watch: "Watch Video", prize_name: "BYD YUANUP 2025" },
+    hero: { subtitle: "NEXT DRAW IN", subtitle_today: "TODAY ONE LUCKY PERSON TAKES THE IPHONE 17 PRO", title1: "Save Together.", title2: "Win the iPhone 17 Pro.", desc: "AfroEqub blends Ethiopia's trusted equb tradition with secure digital payments. Contribute monthly, claim your lucky number, and walk away with a brand-new iPhone 17 Pro in a fully transparent live draw.", cta: "Claim Your Lucky Number", watch: "Watch Video", prize_name: "iPhone 17 Pro" },
     stats: { taken: "Taken Numbers", lucky: "Lucky Numbers" },
     features: {
         heading_sub: "How It Works",
         heading_main: "Three Steps to Your",
-        heading_highlight: "New Car",
+        heading_highlight: "New iPhone 17 Pro",
         desc: "We've digitized the traditional Equb system to make it secure, transparent, and easy to access from anywhere.",
         step1_title: "Register & Verify",
         step1_desc: "Create your secure account using your phone number.",
         step2_title: "Claim your lucky number",
         step2_desc: "Choose your ticket after your payments easily via Telebirr or CBE.",
-        step3_title: "Win & Drive",
-        step3_desc: "Participate in our transparent monthly live draw."
+        step3_title: "Win & Claim",
+        step3_desc: "Participate in our transparent monthly live draw and claim your prize."
     },
     cta_section: {
-        heading: "Your Dream Car Is One Contribution Away",
+        heading: "Your iPhone 17 Pro Is One Contribution Away",
         desc: "Join thousands of members saving together and winning together. Your lucky number is waiting.",
         btn: "Join the Equb Today"
     },
@@ -56,9 +56,9 @@ export const TRANSLATIONS = {
         label_phone: "Phone Number",
         placeholder_phone: "0912345678",
         label_tier: "Monthly Contribution",
-        tier_1: "Standard - 5,000 ETB",
-        tier_2: "Standard - 10,000 ETB",
-        tier_3: "Premium - 25,000 ETB",
+        tier_1: "Standard - 500 ETB",
+        tier_2: "Standard - 500 ETB",
+        tier_3: "Premium - 500 ETB",
         terms_agree: "I agree to the",
         terms_link: "Terms & Conditions",
         btn_login: "Secure Login",
@@ -80,8 +80,8 @@ export const TRANSLATIONS = {
         pay_cbe: "Pay with CBE",
         history: "Recent Activity",
         next_draw: "NEXT DRAW IN 14 DAYS",
-        next_draw_today: "TODAY ONE LUCKY PERSON WILL TAKE THE CAR",
-        win_title: "Win a BYD YUANUP",
+        next_draw_today: "TODAY ONE LUCKY PERSON WILL TAKE THE IPHONE 17 PRO",
+        win_title: "Win an iPhone 17 Pro",
         win_desc: "Make your contribution today to enter the draw. Verified members only.",
         btn_paid: "Contribution Paid",
         live_activity: "Live Activity",
@@ -109,7 +109,7 @@ export const TRANSLATIONS = {
     },
     terms_page: {
         title: "Terms and Conditions",
-        last_updated: "Last Updated: February 2026",
+        last_updated: "Last Updated: August 2026",
         sections: [
             {
                 heading: "1. Acceptance of These Terms",
@@ -121,7 +121,7 @@ export const TRANSLATIONS = {
             },
             {
                 heading: "3. The Equb Program and Contributions",
-                content: "The Service is designed to help facilitate digital participation in an Equb-style contribution and draw program (the \"Program\"). Program terms such as contribution amounts, payment schedules, draw dates, and eligibility to participate may be set by the Service and may change from time to time.\n\nUnless otherwise required by applicable law, contributions and fees (if any) may be non-refundable once a contribution round begins. Missed or late contributions may affect your eligibility for that round, including suspension or ineligibility to participate in the draw."
+                content: "The Service is designed to help facilitate digital participation in an Equb-style contribution and draw program (the \"Program\"). Program terms such as contribution amounts, payment schedules, draw dates, and eligibility to participate may be set by the Service and may change from time to time.\n\nThe current monthly contribution is 500 ETB (five hundred Ethiopian Birr) per member. This amount may be reviewed and changed by the Service with reasonable notice.\n\nUnless otherwise required by applicable law, contributions and fees (if any) may be non-refundable once a contribution round begins. Missed or late contributions may affect your eligibility for that round, including suspension or ineligibility to participate in the draw."
             },
             {
                 heading: "4. Payments, Verification, and Receipts",
@@ -133,11 +133,11 @@ export const TRANSLATIONS = {
             },
             {
                 heading: "6. Draw Process and Results",
-                content: "Draws are intended to be conducted using a transparent and random selection process. The specific method and timing of the draw may be published within the Service or through official announcements.\n\nTo the extent permitted by law, draw results recorded by the Service are final and binding, subject only to correction of clear technical or administrative errors."
+                content: "Draws are intended to be conducted using a transparent and random selection process. The specific method and timing of the draw may be published within the Service or through official announcements.\n\nEach draw cycle awards the grand prize, currently an iPhone 17 Pro, to one lucky winner. To the extent permitted by law, draw results recorded by the Service are final and binding, subject only to correction of clear technical or administrative errors."
             },
             {
                 heading: "7. Prizes and Prize Claims",
-                content: "If prizes are offered, prize details, eligibility rules, and claim requirements will be provided through the Service or official communications. Winners may be required to complete identity verification and provide documentation before receiving a prize.\n\nIf a winner does not respond or complete required steps within a specified claim period, the prize may be forfeited and an alternate winner may be selected, where applicable."
+                content: "Each draw cycle, one lucky winner receives the grand prize, currently an iPhone 17 Pro. Prize details, eligibility rules, and claim requirements will be provided through the Service or official communications. Winners may be required to complete identity verification and provide documentation before receiving a prize.\n\nIf a winner does not respond or complete required steps within a specified claim period, the prize may be forfeited and an alternate winner may be selected, where applicable."
             },
             {
                 heading: "8. Prohibited Conduct",
@@ -233,22 +233,22 @@ export const TRANSLATIONS = {
         back: "ተመለስ",
     },
     nav: { home: "መነሻ", how: "እንዴት ይሰራል", join: "ይመዝገቡ", login: "ይግቡ", register: "ይመዝገቡ", logout: "ውጣ", dashboard: "ዳሽቦርድ", secure: "ደህንነቱ የተጠበቀ", profile: "ፕሮፋይል" },
-    hero: { subtitle: "እጣ ለመውጣት የቀረው ጊዜ:", subtitle_today: "ዛሬ አንድ እድለኛ ሰው መኪናውን ይረከባል", title1: "አብረው ይቆጥቡ።", title2: "የህልም መኪናዎን ያሸንፉ።", desc: "አፍሮ እቁብ የኢትዮጵያን የተማመነ የእቁብ ባህል ከደህንነቱ ከተጠበቀ ዲጂታል ክፍያ ጋር ያጣምራል። በየወሩ ይዋጩ፣ እድለኛ ቁጥርዎን ይያዙ እና በግልጽ በሚተላለፍ የእጣ ሂደት አዲስ መኪና ያሸንፉ።", cta: "የእድለኛ ቁጥርዎን ዛሬ ይያዙ", watch: "ቪዲዮ ይመልከቱ", prize_name: "BYD YUANUP 2025" },
+    hero: { subtitle: "እጣ ለመውጣት የቀረው ጊዜ:", subtitle_today: "ዛሬ አንድ እድለኛ ሰው አይፎን 17 ፕሮ ይረከባል", title1: "አብረው ይቆጥቡ።", title2: "አይፎን 17 ፕሮ ያሸንፉ።", desc: "አፍሮ እቁብ የኢትዮጵያን የተማመነ የእቁብ ባህል ከደህንነቱ ከተጠበቀ ዲጂታል ክፍያ ጋር ያጣምራል። በየወሩ ይዋጩ፣ እድለኛ ቁጥርዎን ይያዙ እና በግልጽ በሚተላለፍ የእጣ ሂደት አዲስ አይፎን 17 ፕሮ ያሸንፉ።", cta: "የእድለኛ ቁጥርዎን ዛሬ ይያዙ", watch: "ቪዲዮ ይመልከቱ", prize_name: "አይፎን 17 ፕሮ" },
     stats: { taken: "የተያዙ ቁጥሮች", lucky: "እድለኛ ቁጥሮች" },
     features: {
         heading_sub: "እንዴት ይሰራል",
-        heading_main: "ወደ አዲሱ መኪናዎ የሚወስዱ",
+        heading_main: "ወደ አዲሱ አይፎን 17 ፕሮ የሚወስዱ",
         heading_highlight: "ሶስት ደረጃዎች",
         desc: "ባህላዊውን የእቁብ ስርዓት ደህንነቱ የተጠበቀ፣ ግልጽ እና ከየትኛውም ቦታ ሆነው በቀላሉ የሚሳተፉበት አድርገን ዘምነነዋል።",
         step1_title: "ይመዝገቡ እና ያረጋግጡ",
         step1_desc: "ስልክ ቁጥርዎን በመጠቀም ደህንነቱ የተጠበቀ መለያ ይፍጠሩ።",
         step2_title: "እድለኛ ቁጥርዎን ይምረጡ",
         step2_desc: "ክፍያዎን በቀላሉ በቴሌቢር ወይም በ CBE በኩል ከፈጸሙ በኋላ ቲኬትዎን ይምረጡ።",
-        step3_title: "ያሸንፉ እና ይንዱ",
-        step3_desc: "በየወሩ በሚካሄደው ግልጽ የእጣ አወጣጥ ላይ ይሳተፉ።"
+        step3_title: "ያሸንፉ እና ይቀበሉ",
+        step3_desc: "በየወሩ በሚካሄደው ግልጽ የእጣ አወጣጥ ላይ ይሳተፉ እና ሽልማትዎን ይቀበሉ።"
     },
     cta_section: {
-        heading: "የህልም መኪናዎ በአንድ ክፍያ ርቀት ላይ ነው",
+        heading: "አይፎን 17 ፕሮዎ በአንድ ክፍያ ርቀት ላይ ነው",
         desc: "አብረው የሚቆጥቡ እና አብረው የሚያሸንፉ በሺዎች የሚቆጠሩ አባላትን ይቀላቀሉ። የእድለኛ ቁጥርዎ ይጠብቅዎታል።",
         btn: "እቁቡን አሁኑኑ ይቀላቀሉ"
     },
@@ -283,9 +283,9 @@ export const TRANSLATIONS = {
         label_phone: "ስልክ ቁጥር",
         placeholder_phone: "0912345678",
         label_tier: "ወራዊ ክፍያ",
-        tier_1: "መደበኛ - 5,000 ብር",
-        tier_2: "መደበኛ - 10,000 ብር",
-        tier_3: "ፕሪሚየም - 25,000 ብር",
+        tier_1: "መደበኛ - 500 ብር",
+        tier_2: "መደበኛ - 500 ብር",
+        tier_3: "ፕሪሚየም - 500 ብር",
         terms_agree: "በ",
         terms_link: "ውሎች እና ሁኔታዎች እስማማለሁ",
         btn_login: "ይግቡ",
@@ -307,8 +307,8 @@ export const TRANSLATIONS = {
         pay_cbe: "በንግድ ባንክ ይክፈሉ",
         history: "የቅርብ ጊዜ እንቅስቃሴዎች",
         next_draw: "የእጣ ቀን የቀረው ጊዜ: 14 ቀናት",
-        next_draw_today: "ዛሬ አንድ እድለኛ ሰው መኪናውን ይረከባል",
-        win_title: "BYD YUANUP ያሸንፉ",
+        next_draw_today: "ዛሬ አንድ እድለኛ ሰው አይፎን 17 ፕሮ ይረከባል",
+        win_title: "አይፎን 17 ፕሮ ያሸንፉ",
         win_desc: "በእጣው ለመሳተፍ ክፍያዎን ዛሬውኑ ይፈጽሙ። የተረጋገጡ አባላት ብቻ።",
         btn_paid: "ክፍያ ተፈጽሟል",
         live_activity: "የቀጥታ እንቅስቃሴ",
@@ -336,7 +336,7 @@ export const TRANSLATIONS = {
     },
     terms_page: {
         title: "ውሎች እና ሁኔታዎች",
-        last_updated: "ለመጨረሻ ጊዜ የተሻሻለው: የካቲት 2018",
+        last_updated: "ለመጨረሻ ጊዜ የተሻሻለው: ነሐሴ 2018",
         sections: [
             {
                 heading: "1. ውሎቹን መቀበል",
@@ -348,7 +348,7 @@ export const TRANSLATIONS = {
             },
             {
                 heading: "3. የእቁብ ፕሮግራም እና መዋጮ",
-                content: "አገልግሎቱ በዲጂታል መንገድ የእቁብ ዓይነት መዋጮ እና የእጣ ሂደት (\"ፕሮግራም\") ለማስተናገድ ተዘጋጅቷል። እንደ መዋጮ መጠን፣ የክፍያ መርሐግብር፣ የእጣ ቀን እና የብቁነት መስፈርቶች በአገልግሎቱ ሊወሰኑ እና ከጊዜ ወደ ጊዜ ሊቀየሩ ይችላሉ።\n\nህግ ካልጠየቀ በቀር የክፍያ ጊዜ ከተጀመረ በኋላ የተከፈሉ መዋጮዎች ወይም ክፍያዎች (ካሉ) ተመላሽ ሊሆኑ አይችሉም። ዘግይቶ ወይም ሳይከፈል ከቀረ ክፍያ በዚያ የክፍያ ጊዜ ላይ ብቁነትዎን ሊነካ ይችላል።"
+                content: "አገልግሎቱ በዲጂታል መንገድ የእቁብ ዓይነት መዋጮ እና የእጣ ሂደት (\"ፕሮግራም\") ለማስተናገድ ተዘጋጅቷል። እንደ መዋጮ መጠን፣ የክፍያ መርሐግብር፣ የእጣ ቀን እና የብቁነት መስፈርቶች በአገልግሎቱ ሊወሰኑ እና ከጊዜ ወደ ጊዜ ሊቀየሩ ይችላሉ።\n\nየአሁኑ ወራዊ መዋጮ በአባል 500 ብር (አምስት መቶ የኢትዮጵያ ብር) ነው። ይህ መጠን በአገልግሎቱ ሊገመገም እና በተገቢው ማስታወቂያ ሊለወጥ ይችላል።\n\nህግ ካልጠየቀ በቀር የክፍያ ጊዜ ከተጀመረ በኋላ የተከፈሉ መዋጮዎች ወይም ክፍያዎች (ካሉ) ተመላሽ ሊሆኑ አይችሉም። ዘግይቶ ወይም ሳይከፈል ከቀረ ክፍያ በዚያ የክፍያ ጊዜ ላይ ብቁነትዎን ሊነካ ይችላል።"
             },
             {
                 heading: "4. ክፍያ ማረጋገጫ እና ደረሰኞች",
@@ -360,11 +360,11 @@ export const TRANSLATIONS = {
             },
             {
                 heading: "6. የእጣ ሂደት እና ውጤት",
-                content: "እጣው በግልጽ እና በዘፈቀደ መንገድ እንዲካሄድ ይታሰባል። የእጣ ዘዴ እና ጊዜ በመተግበሪያው ውስጥ ወይም በይፋ ማስታወቂያ ሊገለጽ ይችላል።\n\nህግ በሚፈቅደው መጠን ውስጥ በአገልግሎቱ የተመዘገበ ውጤት የመጨረሻ ነው፣ ከግልጽ ቴክኒካዊ ወይም አስተዳደራዊ ስህተት ማስተካከል በስተቀር።"
+                content: "እጣው በግልጽ እና በዘፈቀደ መንገድ እንዲካሄድ ይታሰባል። የእጣ ዘዴ እና ጊዜ በመተግበሪያው ውስጥ ወይም በይፋ ማስታወቂያ ሊገለጽ ይችላል።\n\nበእያንዳንዱ የእጣ ዙር ዋናው ሽልማት (በአሁኑ ጊዜ አይፎን 17 ፕሮ) ለአንድ እድለኛ አሸናፊ ይሰጣል። ህግ በሚፈቅደው መጠን ውስጥ በአገልግሎቱ የተመዘገበ ውጤት የመጨረሻ ነው፣ ከግልጽ ቴክኒካዊ ወይም አስተዳደራዊ ስህተት ማስተካከል በስተቀር።"
             },
             {
                 heading: "7. ሽልማቶች እና ሽልማት መቀበል",
-                content: "ሽልማት ካለ፣ ዝርዝሮቹ፣ የብቁነት መመሪያዎች እና የማረጋገጫ መስፈርቶች በመተግበሪያው ውስጥ ወይም በይፋ ግንኙነት ይገለጻሉ። አሸናፊዎች ማንነት ማረጋገጫ ማቅረብ ሊያስፈልጋቸው ይችላል።\n\nበተወሰነ ጊዜ ውስጥ ካልተገናኙ ወይም የሚያስፈልጉ እርምጃዎችን ካላጠናቀቁ ሽልማቱ ሊሰረዝ እና ሌላ አሸናፊ ሊመረጥ ይችላል።"
+                content: "በእያንዳንዱ የእጣ ዙር አንድ እድለኛ አሸናፊ ዋናውን ሽልማት ይቀበላል፣ በአሁኑ ጊዜ አይፎን 17 ፕሮ። የሽልማቱ ዝርዝሮች፣ የብቁነት መመሪያዎች እና የማረጋገጫ መስፈርቶች በመተግበሪያው ውስጥ ወይም በይፋ ግንኙነት ይገለጻሉ። አሸናፊዎች ማንነት ማረጋገጫ ማቅረብ ሊያስፈልጋቸው ይችላል።\n\nበተወሰነ ጊዜ ውስጥ ካልተገናኙ ወይም የሚያስፈልጉ እርምጃዎችን ካላጠናቀቁ ሽልማቱ ሊሰረዝ እና ሌላ አሸናፊ ሊመረጥ ይችላል።"
             },
             {
                 heading: "8. የተከለከለ አጠቃቀም",
@@ -458,9 +458,8 @@ export const TRANSLATIONS = {
 };
 
 export const PRIZE_IMAGES = [
-  "/images/car1.png",
-  "/images/car2.png",
-  "/images/car3.png"
+  "/images/iphone1.png",
+  "/images/iphone2.png"
 ];
 
 export const DEFAULT_SETTINGS : AppSettings = {
@@ -471,10 +470,10 @@ export const DEFAULT_SETTINGS : AppSettings = {
   cycle: 1,
   daysRemaining: 14,
   drawDate: new Date(new Date().setDate(new Date().getDate() + 14)).toISOString().split('T')[0],
-  carsDelivered: 142,
+  iphonesDelivered: 142,
   trustScore: 100,
-  prizeName: 'BYD YUANUP 2025',
-  prizeValue: 'ETB 4.2M',
+  prizeName: 'iPhone 17 Pro',
+  prizeValue: '1,199 USD',
   prizeImage: PRIZE_IMAGES[0],
   prizeImages: PRIZE_IMAGES, // Initialize with constant values
   liveStreamUrl: '',
@@ -488,8 +487,8 @@ export const DEFAULT_SETTINGS : AppSettings = {
       id: 1,
       name: "Dawit M.",
       nameAm: "ዳዊት መ.",
-      prize: "Toyota Vitz",
-      prizeAm: "ቶዮታ ቪትዝ",
+      prize: "iPhone 17 Pro",
+      prizeAm: "አይፎን 17 ፕሮ",
       cycle: "Tir (Jan)",
       cycleAm: "ጥር",
       location: "Addis Ababa",
@@ -499,8 +498,8 @@ export const DEFAULT_SETTINGS : AppSettings = {
       id: 2,
       name: "Sara T.",
       nameAm: "ሳራ ት.",
-      prize: "Hyundai i10",
-      prizeAm: "ሂዩንዳይ i10",
+      prize: "iPhone 17 Pro",
+      prizeAm: "አይፎን 17 ፕሮ",
       cycle: "Tahsas (Dec)",
       cycleAm: "ታህሳስ",
       location: "Adama",

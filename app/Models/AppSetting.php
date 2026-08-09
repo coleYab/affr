@@ -28,7 +28,7 @@ class AppSetting extends Model
         'next_draw_date_am',
         'pot_value',
         'total_members',
-        'cars_delivered',
+        'iphones_delivered',
         'trust_score',
     ];
 
@@ -43,7 +43,7 @@ class AppSetting extends Model
         'winner_announcement_mode' => 'boolean',
         'pot_value' => 'integer',
         'total_members' => 'integer',
-        'cars_delivered' => 'integer',
+        'iphones_delivered' => 'integer',
         'trust_score' => 'integer',
     ];
 }

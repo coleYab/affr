@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedInteger('cycle')->default(1);
             $table->unsignedInteger('days_remaining')->default(14);
             $table->date('draw_date');
-            $table->string('prize_name')->default('BYD YUANUP 2025');
-            $table->string('prize_value')->default('ETB 4.2M');
+            $table->string('prize_name')->default('iPhone 17 Pro');
+            $table->string('prize_value')->default('1,199 USD');
             $table->string('prize_image')->nullable();
             $table->json('prize_images')->nullable();
             $table->string('live_stream_url')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('next_draw_date_am')->nullable();
             $table->unsignedBigInteger('pot_value')->nullable();
             $table->unsignedInteger('total_members')->nullable();
-            $table->unsignedInteger('cars_delivered')->nullable();
+            $table->unsignedInteger('iphones_delivered')->nullable();
             $table->unsignedInteger('trust_score')->nullable();
             $table->timestamps();
         });

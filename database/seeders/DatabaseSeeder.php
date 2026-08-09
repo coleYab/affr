@@ -31,13 +31,12 @@ class DatabaseSeeder extends Seeder
             'days_remaining' => 7,
             'draw_date' => now()->addDays(7),
 
-            'prize_name' => 'BYD YUANUP 2025',
-            'prize_value' => '85,000 USD',
-            'prize_image' => 'prizes/landcruiser-main.jpg',
+            'prize_name' => 'iPhone 17 Pro',
+            'prize_value' => '1,199 USD',
+            'prize_image' => 'images/iphone1.png',
             'prize_images' => [
-                'prizes/landcruiser-1.jpg',
-                'prizes/landcruiser-2.jpg',
-                'prizes/landcruiser-3.jpg',
+                'images/iphone1.png',
+                'images/iphone2.png',
             ],
 
             'live_stream_url' => 'https://youtube.com/live/example',
@@ -52,7 +51,7 @@ class DatabaseSeeder extends Seeder
 
             'pot_value' => 5000000,
             'total_members' => 12500,
-            'cars_delivered' => 32,
+            'iphones_delivered' => 32,
             'trust_score' => 98,
         ]);
 

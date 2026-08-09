@@ -65,7 +65,7 @@ export default function Welcome() {
             : PRIZE_IMAGES;
     const t = TRANSLATIONS[language];
 
-    const seoTitle = 'AfroEqub - Drive Your Dream. Secure Your Future.';
+    const seoTitle = 'AfroEqub - Win the iPhone 17 Pro. Secure Your Future.';
     const seoDescription = t.hero.desc;
     const canonicalUrl = (() => {
         if (typeof window !== 'undefined') {
@@ -429,27 +429,6 @@ export default function Welcome() {
                         </Link>
 
                         <div className="flex items-center space-x-3 sm:space-x-5">
-                            <div className="hidden items-center space-x-7 lg:flex">
-                                <a
-                                    href="#features"
-                                    className="text-sm font-semibold text-stone-600 transition-colors hover:text-royal"
-                                >
-                                    {t.nav.how}
-                                </a>
-                                <a
-                                    href="#tickets"
-                                    className="text-sm font-semibold text-stone-600 transition-colors hover:text-royal"
-                                >
-                                    {language === 'en' ? 'Lucky Numbers' : 'እድለኛ ቁጥሮች'}
-                                </a>
-                            </div>
-
-                            <LanguageSwitcher
-                                language={language}
-                                onLanguageChange={updateLanguage}
-                                className="hidden sm:inline-flex"
-                            />
-
                             {auth.user ? (
                                 <Link
                                     href={dashboard().url}
@@ -460,6 +439,27 @@ export default function Welcome() {
                                 </Link>
                             ) : (
                                 <>
+                                    <div className="hidden items-center space-x-7 lg:flex">
+                                        <a
+                                            href="#features"
+                                            className="text-sm font-semibold text-stone-600 transition-colors hover:text-royal"
+                                        >
+                                            {t.nav.how}
+                                        </a>
+                                        <a
+                                            href="#tickets"
+                                            className="text-sm font-semibold text-stone-600 transition-colors hover:text-royal"
+                                        >
+                                            {language === 'en' ? 'Lucky Numbers' : 'እድለኛ ቁጥሮች'}
+                                        </a>
+                                    </div>
+
+                                    <LanguageSwitcher
+                                        language={language}
+                                        onLanguageChange={updateLanguage}
+                                        className="hidden sm:inline-flex"
+                                    />
+
                                     <Link
                                         href={login().url}
                                         className="hidden items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold text-navy transition-colors hover:text-royal sm:inline-flex"
@@ -686,18 +686,8 @@ export default function Welcome() {
                                     ) : (
                                         /* --- STANDARD PRIZE CAROUSEL --- */
                                         <div className="group relative isolate overflow-hidden">
-                                            <div className="relative flex h-64 items-center justify-center overflow-hidden bg-blue-50 md:h-80">
+                                            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden bg-blue-50">
                                                 <div className="absolute inset-0 bg-gradient-to-br from-royal/10 via-transparent to-navy/10 transition-colors group-hover:from-royal/15" />
-
-                                                <div className="pointer-events-none absolute inset-0 z-10">
-                                                    <div className="absolute top-52 left-52 z-20 flex h-64 w-64 -translate-x-24 -translate-y-24 items-center justify-center">
-                                                        <img
-                                                            src="https://i.postimg.cc/hvkdcQC4/rebbon-final.png"
-                                                            alt="Ribbon"
-                                                            className="h-full w-full scale-[2] object-contain drop-shadow-2xl"
-                                                        />
-                                                    </div>
-                                                </div>
 
                                                 {displayImages.map(
                                                     (img, index) => (
@@ -705,11 +695,19 @@ export default function Welcome() {
                                                             key={index}
                                                             src={img}
                                                             alt={`${settings.prizeName} view ${index + 1}`}
-                                                            className={`absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                                                            className={`absolute inset-0 z-0 h-full w-full object-contain transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                                                         />
                                                     ),
                                                 )}
 
+                                                {/* Gift ribbon wrapping the full image */}
+                                                <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+                                                    <img
+                                                        src="https://i.postimg.cc/hvkdcQC4/rebbon-final.png"
+                                                        alt="Ribbon"
+                                                        className="h-full w-full object-contain drop-shadow-2xl"
+                                                    />
+                                                </div>
                                             </div>                                            <div className="flex items-end justify-between gap-4 p-6">
                                                 <div>
                                                     <h3 className="text-2xl font-extrabold text-navy">

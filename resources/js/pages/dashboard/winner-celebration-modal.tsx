@@ -1,4 +1,4 @@
-import { Trophy, Car } from 'lucide-react';
+import { Trophy, Smartphone } from 'lucide-react';
 
 export default function WinnerCelebrationModal({
     isOpen,
@@ -69,7 +69,7 @@ export default function WinnerCelebrationModal({
                             <span className="text-2xl font-black text-royal">#{ticketNumber}</span>
                         </div>
                         <div className="flex flex-col items-center">
-                            <Car className="mb-2 h-12 w-12 text-stone-800" />
+                            <Smartphone className="mb-2 h-12 w-12 text-stone-800" />
                             <h3 className="text-xl font-bold text-stone-800">{prizeName}</h3>
                         </div>
                     </div>

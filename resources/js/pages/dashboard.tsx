@@ -72,7 +72,7 @@ export default function Dashboard() {
     const [paymentStep, setPaymentStep] = useState<PaymentStep>('IDLE');
     const [showTicketModal, setShowTicketModal] = useState(false);
     const [showWinnerCelebration, setShowWinnerCelebration] = useState(true);
-    const paymentAmount = 1500;
+    const paymentAmount = 500;
     const [paymentReceipt, setPaymentReceipt] = useState<File | null>(null);
     const [paymentError, setPaymentError] = useState<string | null>(null);
 
@@ -666,7 +666,7 @@ export default function Dashboard() {
                                                                     yirgalem
                                                                 </p>
                                                                 <p className="mt-2 inline-flex items-center rounded-lg bg-royal px-3 py-1.5 text-sm font-black text-white">
-                                                                    1,500 Birr
+                                                                    500 Birr
                                                                 </p>
                                                             </div>
                                                             <button
@@ -719,8 +719,8 @@ export default function Dashboard() {
                                                                 </p>
                                                                 <input
                                                                     type="number"
-                                                                    min={1500}
-                                                                    max={1500}
+                                                                    min={500}
+                                                                    max={500}
                                                                     inputMode="numeric"
                                                                     value={paymentAmount}
                                                                     disabled={ true }
@@ -1164,7 +1164,7 @@ export default function Dashboard() {
                                                 Dawit M.
                                             </p>
                                             <p className="text-xs text-royal">
-                                                Won Toyota Vitz (Tir)
+                                                Won iPhone 17 Pro (Tir)
                                             </p>
                                         </div>
                                     </div>

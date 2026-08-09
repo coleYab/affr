@@ -36,7 +36,7 @@ export interface AppSettings {
   cycle: number;
   daysRemaining: number;
   drawDate: string;
-  carsDelivered: number;
+  iphonesDelivered: number;
   trustScore: number;
   prizeName: string;
   prizeValue: string;
