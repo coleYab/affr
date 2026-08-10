@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 5000 tickets
-        for ($i = 1; $i <= 2500; $i++) {
+        // Create 1000 tickets
+        for ($i = 1; $i <= 1000; $i++) {
             Ticket::create([
                 'ticketNumber' => $i,
                 'status' => 'AVAILABLE',

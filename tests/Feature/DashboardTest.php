@@ -80,9 +80,9 @@ test('dashboard ticket board endpoint supports cursor pagination', function () {
         ->assertInertia(fn (Assert $page) => $page
             ->has('ticketBoard', fn (Assert $prop) => $prop
                 ->has('data', 12)
-                ->where('data.0.number', 61)
+                ->where('data.0.number', 1)
                 ->where('data.0.taken', false)
-                ->where('data.1.number', 62)
+                ->where('data.1.number', 2)
                 ->where('data.1.taken', true)
                 ->has('prevCursor')
                 ->has('nextCursor')
