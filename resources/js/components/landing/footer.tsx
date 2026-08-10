@@ -83,7 +83,7 @@ const Footer: React.FC<FooterProps> = ({ language = 'en' }) => {
             <h4 className="mb-4 text-sm font-bold tracking-wider text-white uppercase">
               {t.contact}
             </h4>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-sm text-white">
               <li className="flex items-center gap-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-royal">
                   <Phone className="h-4 w-4" />
@@ -101,7 +101,7 @@ const Footer: React.FC<FooterProps> = ({ language = 'en' }) => {
 
           <div className="lg:col-span-2">
             <h4 className="mb-4 text-sm font-bold tracking-wider text-white uppercase">Explore</h4>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-sm text-white">
               <li>
                 <a href="#how-it-works" className="transition-colors hover:text-royal">
                   How It Works
@@ -127,7 +127,7 @@ const Footer: React.FC<FooterProps> = ({ language = 'en' }) => {
 
           <div className="lg:col-span-2">
             <h4 className="mb-4 text-sm font-bold tracking-wider text-white uppercase">Get Started</h4>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-sm text-white">
               <li>
                 <a href="#tickets" className="inline-flex items-center gap-1 transition-colors hover:text-royal">
                   Join Today
