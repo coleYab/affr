@@ -16,7 +16,7 @@ export const TRANSLATIONS = {
         step1_title: "Register & Verify",
         step1_desc: "Create your secure account using your phone number.",
         step2_title: "Claim your lucky number",
-        step2_desc: "Choose your ticket after your payments easily via Telebirr or CBE.",
+        step2_desc: "Choose your ticket after your payments easily via Telebirr.",
         step3_title: "Win & Claim",
         step3_desc: "Participate in our transparent monthly live draw and claim your prize."
     },
@@ -77,7 +77,6 @@ export const TRANSLATIONS = {
         pot_users: "Contributing",
         upload: "Upload Receipt",
         pay_telebirr: "Pay with Telebirr",
-        pay_cbe: "Pay with CBE",
         history: "Recent Activity",
         next_draw: "NEXT DRAW IN 14 DAYS",
         next_draw_today: "TODAY ONE LUCKY PERSON WILL TAKE THE IPHONE 17 PRO",
@@ -243,7 +242,7 @@ export const TRANSLATIONS = {
         step1_title: "ይመዝገቡ እና ያረጋግጡ",
         step1_desc: "ስልክ ቁጥርዎን በመጠቀም ደህንነቱ የተጠበቀ መለያ ይፍጠሩ።",
         step2_title: "እድለኛ ቁጥርዎን ይምረጡ",
-        step2_desc: "ክፍያዎን በቀላሉ በቴሌቢር ወይም በ CBE በኩል ከፈጸሙ በኋላ ቲኬትዎን ይምረጡ።",
+        step2_desc: "ክፍያዎን በቀላሉ በቴሌቢር ከፈጸሙ በኋላ ቲኬትዎን ይምረጡ።",
         step3_title: "ያሸንፉ እና ይቀበሉ",
         step3_desc: "በየወሩ በሚካሄደው ግልጽ የእጣ አወጣጥ ላይ ይሳተፉ እና ሽልማትዎን ይቀበሉ።"
     },
@@ -304,7 +303,6 @@ export const TRANSLATIONS = {
         pot_users: "አባላት",
         upload: "ደረሰኝ ላክ",
         pay_telebirr: "በቴሌብር ይክፈሉ",
-        pay_cbe: "በንግድ ባንክ ይክፈሉ",
         history: "የቅርብ ጊዜ እንቅስቃሴዎች",
         next_draw: "የእጣ ቀን የቀረው ጊዜ: 14 ቀናት",
         next_draw_today: "ዛሬ አንድ እድለኛ ሰው አይፎን 17 ፕሮ ይረከባል",
