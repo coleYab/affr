@@ -2,6 +2,7 @@ import { Head } from '@inertiajs/react';
 import { Banknote, CheckCircle, Clock, FileText, XCircle } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { useLanguage } from '@/hooks/use-language';
+import { formatDateTime } from '@/lib/utils';
 import AppLayout from '@/layouts/app-layout';
 import { mypayments } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
@@ -139,7 +140,7 @@ export default function MyPayments({ payments } : PageProps) {
                                             <tr key={payment.id} className="transition-colors hover:bg-blue-50/30">
                                                 <td className="px-5 py-4 text-sm text-stone-700">
                                                     <span className="font-mono text-xs text-stone-600">
-                                                        {payment.date}
+                                                        {formatDateTime(payment.date)}
                                                     </span>
                                                 </td>
                                                 <td className="px-5 py-4">

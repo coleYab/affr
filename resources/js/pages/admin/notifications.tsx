@@ -37,6 +37,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { ADMIN_TRANSLATIONS } from '@/constants';
 import { useLanguage } from '@/hooks/use-language';
+import { formatDateTime } from '@/lib/utils';
 import AppLayout from '@/layouts/app-layout';
 import { notifications as adminNotifications } from '@/routes/admin';
 
@@ -327,7 +328,7 @@ export default function Notifications({ notifications }: PageProps) {
                                                     <TableCell>
                                                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                                             <Calendar className="h-3.5 w-3.5" />
-                                                            {item.created_at}
+                                                            {formatDateTime(item.created_at)}
                                                         </div>
                                                     </TableCell>
                                                     <TableCell className="text-right">
@@ -412,7 +413,7 @@ export default function Notifications({ notifications }: PageProps) {
                                     <CardContent className="space-y-3">
                                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                             <Calendar className="h-4 w-4" />
-                                            {item.created_at}
+                                            {formatDateTime(item.created_at)}
                                         </div>
                                         {item.link ? (
                                             <a href={item.link} target="_blank" className="text-xs text-blue-600 hover:underline flex items-center gap-1 w-fit">

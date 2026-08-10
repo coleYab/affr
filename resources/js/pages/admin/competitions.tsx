@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { ADMIN_TRANSLATIONS, PRIZE_IMAGES } from '@/constants';
 import { useLanguage } from '@/hooks/use-language';
+import { formatDateTime } from '@/lib/utils';
 import AppLayout from '@/layouts/app-layout';
 import { update as updateSettings } from '@/routes/admin/settings';
 import type { BreadcrumbItem, User } from '@/types';
@@ -649,7 +650,7 @@ export default function Competition({ tickets, users } : PageProps) {
                                                 </div>
                                                 <div className="rounded-lg border border-stone-200 bg-white p-3">
                                                     <div className="text-xs font-bold text-stone-500 uppercase">Created</div>
-                                                    <div className="mt-1 font-mono font-bold text-stone-800">{paymentPayload.payment.createdAt ?? '-'}</div>
+                                                    <div className="mt-1 font-mono font-bold text-stone-800">{formatDateTime(paymentPayload.payment.createdAt)}</div>
                                                 </div>
                                             </div>
 
