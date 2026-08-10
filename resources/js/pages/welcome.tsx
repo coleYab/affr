@@ -583,20 +583,6 @@ export default function Welcome() {
 
                         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-2 lg:px-8 lg:py-24">
                             <div className="space-y-7 text-center lg:text-left">
-                                <div className="animate-fade-in-down inline-flex items-center gap-2 rounded-full border border-royal/20 bg-royal/10 px-4 py-2 text-xs font-bold tracking-wide text-royal uppercase">
-                                    <Trophy className="h-4 w-4" />
-                                    {settings.daysRemaining === 0 ? (
-                                        t.hero.subtitle_today
-                                    ) : (
-                                        <>
-                                            {t.hero.subtitle}{' '}
-                                            {language === 'en'
-                                                ? `${settings.daysRemaining} DAYS`
-                                                : `${settings.daysRemaining} ቀናት`}
-                                        </>
-                                    )}
-                                </div>
-
                                 <h1 className="animate-fade-in-up text-4xl leading-tight font-extrabold tracking-tight text-navy sm:text-5xl lg:text-6xl">
                                     {t.hero.title1} <br />
                                     <span className="bg-gradient-to-r from-royal to-navy bg-clip-text text-transparent">
@@ -713,11 +699,6 @@ export default function Welcome() {
                                                     <h3 className="text-2xl font-extrabold text-navy">
                                                         {settings.prizeName}
                                                     </h3>
-                                                    <p className="text-sm text-stone-500">
-                                                        {settings.daysRemaining === 0
-                                                            ? t.hero.subtitle_today
-                                                            : `${t.hero.subtitle} ${settings.daysRemaining} ${language === 'en' ? 'days' : 'ቀናት'}`}
-                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
