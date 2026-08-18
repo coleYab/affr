@@ -2,6 +2,7 @@ import { Head, router, usePage } from '@inertiajs/react';
 import { CheckCircle, Video, ExternalLink, Upload, PlusCircle, ArrowLeft, Copy, PartyPopper, Search, XCircle, Lock, Trophy, Ticket } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
+import { TelegramPhoneRequest } from '@/components/telegram-phone-request';
 import { PRIZE_IMAGES, TRANSLATIONS } from '@/constants';
 import { useLanguage } from '@/hooks/use-language';
 import AppLayout from '@/layouts/app-layout';
@@ -425,6 +426,8 @@ export default function Dashboard() {
                                 </h1>
                             </div>
                         </div>
+
+                        <TelegramPhoneRequest />
 
                         {settings.recentWinners && settings.recentWinners.length > 0 && (
                             <div className="animate-fade-in-down mb-8">

@@ -20,6 +20,10 @@ Route::post('auth/telegram', [TelegramAuthController::class, 'store'])
     ->middleware(['guest', 'throttle:10,1'])
     ->name('telegram.auth');
 
+Route::post('auth/telegram/phone', [TelegramAuthController::class, 'storePhone'])
+    ->middleware(['auth', 'throttle:10,1'])
+    ->name('telegram.phone');
+
 Route::get('/privacy', function () {
     return Inertia::render('privacy');
 })->name('privacy');

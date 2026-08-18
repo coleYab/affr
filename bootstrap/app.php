@@ -24,7 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
          * endpoint relies on the HMAC-signed initData payload instead of a
          * CSRF token, so it is exempt from the default CSRF verification.
          */
-        $middleware->validateCsrfTokens(except: ['auth/telegram']);
+        $middleware->validateCsrfTokens(except: ['auth/telegram*']);
 
         $middleware->web(append: [
             HandleAppearance::class,

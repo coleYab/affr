@@ -97,6 +97,68 @@ class TelegramAuthController extends Controller
     }
 
     /**
+     * Attach the phone number the user shared through the native Telegram
+     * contact dialog (validated the same way as the auth payload).
+     */
+    public function storePhone(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'init_data' => ['required', 'string'],
+        ]);
+
+        $payload = $this->validator->validateContact($validated['init_data']);
+
+        $contactData = $payload !== null && isset($payload['contact'])
+            ? json_decode((string) $payload['contact'], true)
+            : null;
+
+        if (! is_array($contactData)) {
+            throw $this->authenticationFailed();
+        }
+
+        $contactUserId = (int) ($contactData['user_id'] ?? 0);
+        $phoneNumber = $this->normalizePhone((string) ($contactData['phone_number'] ?? ''));
+
+        if ($contactUserId <= 0 || $phoneNumber === '') {
+            throw $this->authenticationFailed();
+        }
+
+        /** @var User $user */
+        $user = $request->user();
+
+        if ($contactUserId !== (int) $user->telegram_id) {
+            throw $this->authenticationFailed();
+        }
+
+        $inUse = User::query()
+            ->where('phoneNumber', $phoneNumber)
+            ->whereKeyNot($user->getKey())
+            ->exists();
+
+        if ($inUse) {
+            throw ValidationException::withMessages([
+                'phone' => 'This phone number is already linked to another account.',
+            ]);
+        }
+
+        $user->phoneNumber = $phoneNumber;
+        $user->save();
+
+        return redirect()->back()->with('status', 'Phone number saved.');
+    }
+
+    /**
+     * Normalize a shared phone number to its international form (e.g.
+     * +251912345678), dropping whitespace and separators.
+     */
+    private function normalizePhone(string $phone): string
+    {
+        $normalized = preg_replace('/[\s\-()]+/', '', $phone);
+
+        return is_string($normalized) ? $normalized : '';
+    }
+
+    /**
      * @return array<string, mixed>|null
      */
     private function resolveUserData(?array $payload): ?array

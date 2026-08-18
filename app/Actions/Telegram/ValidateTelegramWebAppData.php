@@ -11,15 +11,33 @@ namespace App\Actions\Telegram;
 class ValidateTelegramWebAppData
 {
     /**
-     * Validate the initData payload and return the parsed user data.
+     * Validate an authentication initData payload (contains a "user" field).
      *
      * @return array<string, mixed>|null The parsed payload or null when invalid.
      */
     public function validate(string $initData): ?array
     {
+        return $this->validatePayload($initData, 'user');
+    }
+
+    /**
+     * Validate a contact sharing payload (contains a "contact" field).
+     *
+     * @return array<string, mixed>|null The parsed payload or null when invalid.
+     */
+    public function validateContact(string $initData): ?array
+    {
+        return $this->validatePayload($initData, 'contact');
+    }
+
+    /**
+     * @return array<string, mixed>|null The parsed payload or null when invalid.
+     */
+    private function validatePayload(string $initData, string $requiredField): ?array
+    {
         $params = $this->parse($initData);
 
-        if (empty($params['hash']) || empty($params['user']) || empty($params['auth_date'])) {
+        if (empty($params['hash']) || empty($params[$requiredField]) || empty($params['auth_date'])) {
             return null;
         }
 

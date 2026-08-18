@@ -15,6 +15,29 @@ export type TelegramInitDataUnsafe = {
     hash?: string;
 };
 
+type TelegramRequestContactSuccess = {
+    response: string;
+    responseUnsafe: {
+        auth_date: string;
+        contact: {
+            first_name: string;
+            last_name?: string;
+            phone_number: string;
+            user_id: number;
+        };
+        hash: string;
+    };
+    status: 'sent';
+};
+
+type TelegramRequestContactCancelled = {
+    status: 'cancelled';
+};
+
+export type TelegramRequestContactResult =
+    | TelegramRequestContactSuccess
+    | TelegramRequestContactCancelled;
+
 declare global {
     interface Window {
         Telegram?: {
@@ -30,6 +53,12 @@ declare global {
                 openTelegramLink: (url: string) => void;
                 openLink: (url: string) => void;
                 close: () => void;
+                requestContact: (
+                    callback: (
+                        shared: boolean,
+                        info?: TelegramRequestContactResult,
+                    ) => void,
+                ) => void;
             };
         };
     }

@@ -36,6 +36,35 @@ $telegramUser = [
     'photo_url' => 'https://t.me/i/userpic/320/abc123.jpg',
 ];
 
+function telegram_contact_data(
+    int $userId,
+    string $phoneNumber = '+251912345678',
+    ?int $authDate = null,
+    ?string $botToken = null,
+): string {
+    $botToken ??= (string) config('telegram.bot_token');
+
+    $payload = [
+        'auth_date' => (string) ($authDate ?? now()->timestamp),
+        'contact' => json_encode([
+            'user_id' => $userId,
+            'phone_number' => $phoneNumber,
+            'first_name' => 'Artyom',
+        ], JSON_THROW_ON_ERROR),
+    ];
+
+    $dataCheckString = collect($payload)
+        ->sortKeys()
+        ->map(fn (string $value, string $key) => "{$key}={$value}")
+        ->values()
+        ->implode("\n");
+
+    $secretKey = hash_hmac('sha256', $botToken, 'WebAppData', true);
+    $hash = bin2hex(hash_hmac('sha256', $dataCheckString, $secretKey, true));
+
+    return http_build_query([...$payload, 'hash' => $hash]);
+}
+
 test('a guest is registered and authenticated with valid telegram initData', function () use ($telegramUser) {
     $response = $this->post(route('telegram.auth'), [
         'init_data' => telegram_init_data($telegramUser),
@@ -214,6 +243,89 @@ test('csrf mismatches on other routes redirect back with a friendly message', fu
 
     expect($response->getStatusCode())->toBe(302)
         ->and(session('status'))->toBe('The page expired, please try again.');
+});
+
+test('an authenticated telegram user can attach a shared phone number', function () use ($telegramUser) {
+    $user = User::factory()->create(['telegram_id' => $telegramUser['id']]);
+
+    $this->actingAs($user)
+        ->post(route('telegram.phone'), [
+            'init_data' => telegram_contact_data($telegramUser['id']),
+        ])
+        ->assertSessionHasNoErrors()
+        ->assertSessionHas('status', 'Phone number saved.');
+
+    expect($user->fresh()->phoneNumber)->toBe('+251912345678');
+});
+
+test('the phone number cannot be attached when it belongs to another account', function () use ($telegramUser) {
+    User::factory()->create([
+        'phoneNumber' => '+251911000000',
+    ]);
+
+    $user = User::factory()->create([
+        'telegram_id' => $telegramUser['id'],
+        'phoneNumber' => null,
+    ]);
+
+    $this->actingAs($user)
+        ->post(route('telegram.phone'), [
+            'init_data' => telegram_contact_data($telegramUser['id'], '+251911000000'),
+        ])
+        ->assertSessionHasErrors('phone');
+
+    expect($user->fresh()->phoneNumber)->toBeNull();
+});
+
+test('the contact payload must belong to the authenticated user', function () use ($telegramUser) {
+    $user = User::factory()->create([
+        'telegram_id' => $telegramUser['id'],
+        'phoneNumber' => null,
+    ]);
+
+    $this->actingAs($user)
+        ->post(route('telegram.phone'), [
+            'init_data' => telegram_contact_data(999999999),
+        ])
+        ->assertSessionHasErrors('init_data');
+
+    expect($user->fresh()->phoneNumber)->toBeNull();
+});
+
+test('the phone number is rejected when the contact payload is not signed by the bot', function () use ($telegramUser) {
+    $user = User::factory()->create([
+        'telegram_id' => $telegramUser['id'],
+        'phoneNumber' => null,
+    ]);
+
+    $this->actingAs($user)
+        ->post(route('telegram.phone'), [
+            'init_data' => telegram_contact_data($telegramUser['id'], botToken: '999999:attacker-token'),
+        ])
+        ->assertSessionHasErrors('init_data');
+
+    expect($user->fresh()->phoneNumber)->toBeNull();
+});
+
+test('guests cannot attach a phone number', function () use ($telegramUser) {
+    $this->post(route('telegram.phone'), [
+        'init_data' => telegram_contact_data($telegramUser['id']),
+    ])->assertRedirect(route('login'));
+});
+
+test('phone sharing works without a valid csrf token (telegram webview)', function () use ($telegramUser) {
+    $user = User::factory()->create(['telegram_id' => $telegramUser['id']]);
+
+    $this
+        ->actingAs($user)
+        ->withHeader('X-XSRF-TOKEN', 'bogus-token')
+        ->withCookie('XSRF-TOKEN', 'bogus-token')
+        ->post(route('telegram.phone'), [
+            'init_data' => telegram_contact_data($telegramUser['id']),
+        ])
+        ->assertSessionHas('status', 'Phone number saved.');
+
+    expect($user->fresh()->phoneNumber)->toBe('+251912345678');
 });
 
 test('authenticated users are redirected away from the telegram auth endpoint', function () use ($telegramUser) {
