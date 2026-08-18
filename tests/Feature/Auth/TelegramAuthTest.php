@@ -193,6 +193,29 @@ test('existing telegram users can still log in when registration is disabled', f
     $this->assertAuthenticated();
 });
 
+test('telegram auth works without a valid csrf token (telegram webview)', function () use ($telegramUser) {
+    $response = $this
+        ->withHeader('X-XSRF-TOKEN', 'bogus-token')
+        ->withCookie('XSRF-TOKEN', 'bogus-token')
+        ->post(route('telegram.auth'), [
+            'init_data' => telegram_init_data($telegramUser),
+        ]);
+
+    $response->assertSessionHasNoErrors()->assertRedirect(route('dashboard'));
+
+    $this->assertAuthenticated();
+});
+
+test('csrf mismatches on other routes redirect back with a friendly message', function () {
+    $response = app(\Illuminate\Foundation\Exceptions\Handler::class)->render(
+        \Illuminate\Http\Request::create('/payments', 'POST'),
+        new \Illuminate\Session\TokenMismatchException,
+    );
+
+    expect($response->getStatusCode())->toBe(302)
+        ->and(session('status'))->toBe('The page expired, please try again.');
+});
+
 test('authenticated users are redirected away from the telegram auth endpoint', function () use ($telegramUser) {
     $user = User::factory()->create();
 
