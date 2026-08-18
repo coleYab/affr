@@ -16,7 +16,7 @@ import { useLanguage } from '@/hooks/use-language';
 import { dashboard } from '@/routes';
 import { mypayments } from '@/routes';
 import { settings as adminSettings, notifications as adminNotifications, payments as adminPayments, prize as adminPrize, users, dashboard as adminDashboard, cycle } from '@/routes/admin';
-import { mytickets, mynotifications } from '@/routes/user';
+import { mytickets } from '@/routes/user';
 import type { NavItem } from '@/types';
 import AppLogo from './app-logo';
 
@@ -25,13 +25,11 @@ const mainNavLabels = {
         dashboard: 'Home',
         myTickets: 'Tickets',
         myPayments: 'Payments',
-        notifications: 'Notifications',
     },
     am: {
         dashboard: 'መነሻ',
         myTickets: 'ቲኬቶች',
         myPayments: 'ክፍያዎች',
-        notifications: 'ማሳወቂያዎች',
     },
 } as const;
 
@@ -76,11 +74,6 @@ export function AppSidebar() {
             title: labels.myPayments,
             href: mypayments(),
             icon: CreditCard,
-        },
-        {
-            title: labels.notifications,
-            href: mynotifications(),
-            icon: Bell,
         },
     ];
 

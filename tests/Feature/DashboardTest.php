@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\RecentActivity;
 use App\Models\Ticket;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -30,43 +29,16 @@ test('authenticated users can visit the dashboard', function () {
             ->has('ticketBoard')
             ->has('ticketBoard.data')
             ->has('ticketBoard.nextCursor')
-            ->has('recentActivities')
+            ->has('userSummary')
         );
 });
 
-test('dashboard includes recent activities for the authenticated user', function () {
-    $user = User::factory()->create();
+test('users without a phone number are sent to phone verification', function () {
+    $user = User::factory()->create(['phoneNumber' => null]);
 
-    RecentActivity::factory()->create([
-        'userId' => $user->id,
-        'type' => 'PAYMENT_APPROVED',
-        'status' => 'success',
-        'title_en' => 'Payment Approved',
-        'description_en' => 'Your payment was approved.',
-        'occurred_at' => now(),
-    ]);
-
-    $otherUser = User::factory()->create();
-    RecentActivity::factory()->create([
-        'userId' => $otherUser->id,
-        'type' => 'JOINED',
-        'status' => 'info',
-        'title_en' => 'Someone joined',
-        'description_en' => 'Another user joined.',
-        'occurred_at' => now(),
-    ]);
-
-    $this
-        ->actingAs($user)
+    $this->actingAs($user)
         ->get(route('dashboard'))
-        ->assertOk()
-        ->assertInertia(fn (Assert $page) => $page
-            ->component('dashboard')
-            ->has('recentActivities', 1)
-            ->where('recentActivities.0.type', 'PAYMENT_APPROVED')
-            ->where('recentActivities.0.status', 'success')
-            ->where('recentActivities.0.title.en', 'Payment Approved')
-        );
+        ->assertRedirect(route('phone.verify'));
 });
 
 test('dashboard ticket board endpoint supports cursor pagination', function () {

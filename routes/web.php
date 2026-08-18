@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\WinnerController;
-use App\Http\Controllers\AppNotificationReadController;
 use App\Http\Controllers\AppSettingsController;
 use App\Http\Controllers\PaymentsController;
-use App\Http\Controllers\RecentActivityController;
+use App\Http\Controllers\PhoneVerificationController;
 use App\Http\Controllers\TelegramAuthController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
@@ -24,25 +23,33 @@ Route::post('auth/telegram/phone', [TelegramAuthController::class, 'storePhone']
     ->middleware(['auth', 'throttle:10,1'])
     ->name('telegram.phone');
 
+Route::get('phone/verify', [PhoneVerificationController::class, 'show'])
+    ->middleware('auth')
+    ->name('phone.verify');
+
+Route::post('phone/verify', [PhoneVerificationController::class, 'store'])
+    ->middleware(['auth', 'throttle:10,1'])
+    ->name('phone.verify.store');
+
 Route::get('/privacy', function () {
     return Inertia::render('privacy');
 })->name('privacy');
 
 Route::get('dashboard', [TicketController::class, 'dashboard'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'ensure_phone_verified'])
     ->name('dashboard');
 
 Route::get('dashboard/ticket-board', [TicketController::class, 'dashboard'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'ensure_phone_verified'])
     ->name('dashboard.ticket-board');
 
 Route::get('tickets/check-availability', [TicketController::class, 'checkAvailability'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'ensure_phone_verified'])
     ->name('tickets.check-availability');
 
 // this are admin routes
 Route::prefix('admin')
-    ->middleware(['auth', 'verified', 'is_admin'])
+    ->middleware(['auth', 'verified', 'is_admin', 'ensure_phone_verified'])
     ->group(function () {
         Route::get('settings', [AppSettingsController::class, 'index'])->name('admin.settings');
         Route::put('settings', [AppSettingsController::class, 'store'])->name('admin.settings.update');
@@ -66,22 +73,16 @@ Route::prefix('admin')
         Route::post('winners/announce', [WinnerController::class, 'announce']);
     });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'ensure_phone_verified'])->group(function () {
     Route::get('/mypayments', [PaymentsController::class, 'mypayments'])->name('mypayments');
     Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.store');
     Route::put('/payments/{id}', [PaymentsController::class, 'update'])->name('payments.update');
     Route::delete('/payments/{id}', [PaymentsController::class, 'delete'])->name('payments.delete');
-    Route::get('/recent-activities', [RecentActivityController::class, 'index'])->name('recent-activities.index');
-
-    Route::post('/notifications/{notification}/read', [AppNotificationReadController::class, 'store'])
-        ->name('user.notifications.read');
-    Route::post('/notifications/read-all', [AppNotificationReadController::class, 'storeAll'])
-        ->name('user.notifications.read-all');
 });
 
 // this are the normal routes
-Route::get('myticket', [TicketController::class, 'tickets'])->middleware(['auth', 'verified'])->name('user.mytickets');
-// Route::get('mypayments', [TicketController::class, 'mypayments'])->middleware(['auth', 'verified'])->name('user.mypaymnets');
-Route::get('notifications', [TicketController::class, 'notifications'])->middleware(['auth', 'verified'])->name('user.mynotifications');
+Route::get('myticket', [TicketController::class, 'tickets'])
+    ->middleware(['auth', 'verified', 'ensure_phone_verified'])
+    ->name('user.mytickets');
 
 require __DIR__.'/settings.php';

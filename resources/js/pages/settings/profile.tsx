@@ -4,7 +4,6 @@ import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileCo
 import DeleteUser from '@/components/delete-user';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
-import { TelegramPhoneRequest } from '@/components/telegram-phone-request';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -31,8 +30,6 @@ export default function Profile() {
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <TelegramPhoneRequest />
-
                     <Heading
                         variant="small"
                         title="Profile information"

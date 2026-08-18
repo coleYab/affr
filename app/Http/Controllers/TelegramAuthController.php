@@ -144,7 +144,7 @@ class TelegramAuthController extends Controller
         $user->phoneNumber = $phoneNumber;
         $user->save();
 
-        return redirect()->back()->with('status', 'Phone number saved.');
+        return redirect()->route('dashboard')->with('status', 'Phone number saved.');
     }
 
     /**

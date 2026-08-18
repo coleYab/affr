@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AppNotification;
-use App\Models\AppNotificationRead;
 use App\Models\AppSetting;
 use App\Models\Payments;
-use App\Models\RecentActivity;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,55 +30,6 @@ class TicketController extends Controller
             ->orderBy('ticketNumber')
             ->get(['id', 'ticketNumber', 'status', 'reservedAt', 'paymentId']);
 
-        $notificationModels = AppNotification::query()
-            ->when($user, function ($query) use ($user): void {
-                $query->where(function ($query) use ($user): void {
-                    $query->whereNull('target_user_id');
-                    $query->orWhere('target_user_id', $user->id);
-                });
-            })
-            ->latest('sent_at')
-            ->latest('created_at')
-            ->limit(10)
-            ->get();
-
-        $readNotificationIds = AppNotificationRead::query()
-            ->where('user_id', $user->id)
-            ->whereIn('app_notification_id', $notificationModels->pluck('id'))
-            ->pluck('app_notification_id')
-            ->all();
-
-        $readNotificationIdSet = array_fill_keys($readNotificationIds, true);
-
-        $notifications = $notificationModels
-            ->map(function (AppNotification $notification) use ($readNotificationIdSet): array {
-                return [
-                    'id' => $notification->id,
-                    'title' => [
-                        'en' => $notification->title_en,
-                        'am' => $notification->title_am ?? $notification->title_en,
-                    ],
-                    'desc' => [
-                        'en' => $notification->message_en,
-                        'am' => $notification->message_am ?? $notification->message_en,
-                    ],
-                    'time' => ($notification->sent_at ?? $notification->created_at)?->toIso8601String(),
-                    'urgent' => $notification->is_urgent,
-                    'read' => isset($readNotificationIdSet[$notification->id]),
-                    'link' => $notification->link,
-                ];
-            })
-            ->values();
-
-        $recentActivities = RecentActivity::query()
-            ->where('userId', $user->id)
-            ->latest('occurred_at')
-            ->latest('id')
-            ->limit(10)
-            ->get()
-            ->map(fn (RecentActivity $activity): array => $activity->toFrontendPayload())
-            ->values();
-
         return Inertia::render('dashboard', [
             'ticketBoard' => $this->ticketBoard($request),
             'userSummary' => [
@@ -93,8 +41,6 @@ class TicketController extends Controller
                 'joinedDate' => $user->created_at?->toDateString(),
             ],
             'myTickets' => $myTickets,
-            'notifications' => $notifications,
-            'recentActivities' => $recentActivities,
         ]);
     }
 
@@ -288,53 +234,6 @@ class TicketController extends Controller
     public function find(): Response
     {
         return Inertia::render('tickets', []);
-    }
-
-    public function notifications(): Response
-    {
-        $user = Auth::user();
-
-        $notificationModels = AppNotification::query()
-            ->when($user, function ($query) use ($user): void {
-                $query->where(function ($query) use ($user): void {
-                    $query->whereNull('target_user_id');
-                    $query->orWhere('target_user_id', $user->id);
-                });
-            })
-            ->latest('sent_at')
-            ->latest('created_at')
-            ->get();
-
-        $readNotificationIds = AppNotificationRead::query()
-            ->where('user_id', $user->id)
-            ->whereIn('app_notification_id', $notificationModels->pluck('id'))
-            ->pluck('app_notification_id')
-            ->all();
-
-        $readNotificationIdSet = array_fill_keys($readNotificationIds, true);
-
-        $notifications = $notificationModels
-            ->map(function (AppNotification $notification) use ($readNotificationIdSet): array {
-                return [
-                    'id' => $notification->id,
-                    'title' => [
-                        'en' => $notification->title_en,
-                        'am' => $notification->title_am ?? $notification->title_en,
-                    ],
-                    'desc' => [
-                        'en' => $notification->message_en,
-                        'am' => $notification->message_am ?? $notification->message_en,
-                    ],
-                    'time' => ($notification->sent_at ?? $notification->created_at)?->toIso8601String(),
-                    'urgent' => $notification->is_urgent,
-                    'read' => isset($readNotificationIdSet[$notification->id]),
-                    'link' => $notification->link,
-                ];
-            });
-
-        return Inertia::render('notifications', [
-            'notifications' => $notifications,
-        ]);
     }
 
     public function delete(): Response

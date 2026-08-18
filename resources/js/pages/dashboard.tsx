@@ -2,15 +2,12 @@ import { Head, router, usePage } from '@inertiajs/react';
 import { CheckCircle, Video, ExternalLink, Upload, PlusCircle, ArrowLeft, Copy, PartyPopper, Search, XCircle, Lock, Trophy, Ticket } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { TelegramPhoneRequest } from '@/components/telegram-phone-request';
 import { PRIZE_IMAGES, TRANSLATIONS } from '@/constants';
 import { useLanguage } from '@/hooks/use-language';
 import AppLayout from '@/layouts/app-layout';
-import ActivityTimeline, { type RecentActivityItem } from '@/pages/dashboard/activity-timeline';
 import TicketSelectionModal from '@/pages/dashboard/ticket-selection-modal';
 import WinnerCelebrationModal from '@/pages/dashboard/winner-celebration-modal';
 import { dashboard } from '@/routes';
-import { mynotifications } from '@/routes/user';
 import type { BreadcrumbItem } from '@/types';
 import type { AppSettings } from '@/types/app';
 
@@ -61,7 +58,6 @@ export default function Dashboard() {
         | undefined;
 
     const user = usePage().props.userSummary as UserSummary;
-    const recentActivities = (usePage().props.recentActivities ?? []) as RecentActivityItem[];
     const serverMyTickets = (usePage().props.myTickets ?? []) as Array<{ ticketNumber: number; status: string; cycle?: number | null }>;
 
     const settings = {
@@ -426,8 +422,6 @@ export default function Dashboard() {
                                 </h1>
                             </div>
                         </div>
-
-                        <TelegramPhoneRequest />
 
                         {settings.recentWinners && settings.recentWinners.length > 0 && (
                             <div className="animate-fade-in-down mb-8">
@@ -944,12 +938,6 @@ export default function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
-
-                                <ActivityTimeline
-                                    items={recentActivities}
-                                    viewAllHref={mynotifications().url}
-                                    label={t.history}
-                                />
                             </div>
 
                             <div className="space-y-6">

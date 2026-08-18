@@ -313,6 +313,17 @@ test('guests cannot attach a phone number', function () use ($telegramUser) {
     ])->assertRedirect(route('login'));
 });
 
+test('telegram users without a phone are sent to phone verification', function () use ($telegramUser) {
+    $user = User::factory()->create([
+        'telegram_id' => $telegramUser['id'],
+        'phoneNumber' => null,
+    ]);
+
+    $this->actingAs($user)
+        ->get(route('dashboard'))
+        ->assertRedirect(route('phone.verify'));
+});
+
 test('phone sharing works without a valid csrf token (telegram webview)', function () use ($telegramUser) {
     $user = User::factory()->create(['telegram_id' => $telegramUser['id']]);
 
