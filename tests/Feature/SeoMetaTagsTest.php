@@ -1,7 +1,7 @@
 <?php
 
-test('home page includes seo and social meta tags', function () {
-    $response = $this->get(route('home'));
+test('auth pages include seo and social meta tags', function () {
+    $response = $this->get(route('login'));
 
     $response
         ->assertOk()

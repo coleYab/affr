@@ -98,13 +98,6 @@ class TicketController extends Controller
         ]);
     }
 
-    public function publicTicketBoard(Request $request): Response
-    {
-        return Inertia::render('welcome', [
-            'ticketBoard' => $this->ticketBoard($request),
-        ]);
-    }
-
     /**
      * @return array{data: array<int, array{number:int, taken:bool}>, prevCursor: ?string, nextCursor: ?string}
      */
@@ -179,11 +172,6 @@ class TicketController extends Controller
             'exists' => true,
             'taken' => $ticket->status !== 'AVAILABLE',
         ]);
-    }
-
-    public function publicCheckAvailability(Request $request): \Illuminate\Http\JsonResponse
-    {
-        return $this->checkAvailability($request);
     }
 
     // Show tickets for the logged-in user

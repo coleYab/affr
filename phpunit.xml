@@ -31,5 +31,7 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="TELEGRAM_BOT_TOKEN" value="123456:test-bot-token"/>
+        <env name="TELEGRAM_ADMIN_IDS" value="777000,888111"/>
     </php>
 </phpunit>

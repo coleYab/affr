@@ -10,6 +10,14 @@ test('guests are redirected to the login page', function () {
     $response->assertRedirect(route('login'));
 });
 
+test('the root path redirects to the dashboard', function () {
+    $this->get('/')->assertRedirect(route('dashboard'));
+
+    $this->actingAs(User::factory()->create())
+        ->get('/')
+        ->assertRedirect(route('dashboard'));
+});
+
 test('authenticated users can visit the dashboard', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
@@ -135,48 +143,6 @@ test('ticket availability endpoint returns taken status', function () {
     $this
         ->actingAs($user)
         ->getJson(route('tickets.check-availability', ['number' => 11]))
-        ->assertSuccessful()
-        ->assertJson([
-            'exists' => true,
-            'taken' => true,
-        ]);
-});
-
-test('guests can load public ticket board and check availability', function () {
-    Ticket::factory()->createMany([
-        ['ticketNumber' => 1, 'status' => 'AVAILABLE'],
-        ['ticketNumber' => 2, 'status' => 'SOLD'],
-        ['ticketNumber' => 3, 'status' => 'AVAILABLE'],
-        ['ticketNumber' => 4, 'status' => 'SOLD'],
-        ['ticketNumber' => 5, 'status' => 'AVAILABLE'],
-        ['ticketNumber' => 6, 'status' => 'SOLD'],
-        ['ticketNumber' => 7, 'status' => 'AVAILABLE'],
-        ['ticketNumber' => 8, 'status' => 'SOLD'],
-        ['ticketNumber' => 9, 'status' => 'AVAILABLE'],
-        ['ticketNumber' => 10, 'status' => 'SOLD'],
-        ['ticketNumber' => 11, 'status' => 'AVAILABLE'],
-        ['ticketNumber' => 12, 'status' => 'SOLD'],
-        ['ticketNumber' => 13, 'status' => 'AVAILABLE'],
-    ]);
-
-    $this
-        ->get(route('public.ticket-board', ['perPage' => 12]))
-        ->assertSuccessful()
-        ->assertInertia(fn (Assert $page) => $page
-            ->component('welcome')
-            ->has('ticketBoard', fn (Assert $prop) => $prop
-                ->has('data', 12)
-                ->where('data.0.number', 1)
-                ->where('data.0.taken', false)
-                ->where('data.1.number', 2)
-                ->where('data.1.taken', true)
-                ->has('prevCursor')
-                ->has('nextCursor')
-            )
-        );
-
-    $this
-        ->getJson(route('tickets.public-check-availability', ['number' => 2]))
         ->assertSuccessful()
         ->assertJson([
             'exists' => true,

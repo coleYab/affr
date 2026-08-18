@@ -5,26 +5,20 @@ use App\Http\Controllers\AppNotificationReadController;
 use App\Http\Controllers\AppSettingsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\RecentActivityController;
+use App\Http\Controllers\TelegramAuthController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');
-
-Route::get('ticket-board', [TicketController::class, 'publicTicketBoard'])
-    ->name('public.ticket-board');
-
-Route::get('tickets/public-check-availability', [TicketController::class, 'publicCheckAvailability'])
-    ->name('tickets.public-check-availability');
+Route::redirect('/', '/dashboard')->name('home');
 
 Route::get('/terms', function () {
     return Inertia::render('terms');
 })->name('terms');
+
+Route::post('auth/telegram', [TelegramAuthController::class, 'store'])
+    ->middleware(['guest', 'throttle:10,1'])
+    ->name('telegram.auth');
 
 Route::get('/privacy', function () {
     return Inertia::render('privacy');

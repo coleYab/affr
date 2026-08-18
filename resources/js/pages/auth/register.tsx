@@ -1,6 +1,7 @@
 import { Form, Head } from '@inertiajs/react';
 import { useState } from 'react';
 import InputError from '@/components/input-error';
+import { TelegramConnectButton } from '@/components/telegram-connect-button';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -25,6 +26,23 @@ export default function Register() {
             description={t.auth_layout_description_register}
         >
             <Head title={t.head_register} />
+
+            <TelegramConnectButton
+                wrapperClassName="mb-6"
+                className="py-3.5"
+            />
+
+            <div className="relative mb-6">
+                <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                        {language === 'en' ? 'or continue manually' : 'ወይም'}
+                    </span>
+                </div>
+            </div>
+
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}

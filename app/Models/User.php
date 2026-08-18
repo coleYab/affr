@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +14,13 @@ class User extends Authenticatable
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
 
     /**
+     * Additional attributes included when serializing the model.
+     *
+     * @var list<string>
+     */
+    protected $appends = ['has_password'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -20,9 +28,15 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'is_admin',
         'phoneNumber',
         'password',
+        'telegram_id',
+        'telegram_username',
+        'telegram_photo_url',
+        'language_code',
+        'last_seen_at',
     ];
 
     /**
@@ -48,6 +62,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'last_seen_at' => 'datetime',
+            'is_admin' => 'boolean',
         ];
+    }
+
+    /**
+     * Whether the account is protected by a password, e.g. created
+     * through the classic registration flow instead of Telegram.
+     */
+    protected function hasPassword(): Attribute
+    {
+        return Attribute::get(fn () => filled($this->attributes['password'] ?? null));
     }
 }

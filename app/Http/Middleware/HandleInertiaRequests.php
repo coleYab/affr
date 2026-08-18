@@ -42,6 +42,9 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'telegram' => [
+                'botUsername' => config('telegram.bot_username'),
+            ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'status' => $request->session()->get('status'),
         ];
