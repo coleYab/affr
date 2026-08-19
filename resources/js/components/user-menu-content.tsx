@@ -1,10 +1,8 @@
-import { Link } from '@inertiajs/react';
 import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { UserInfo } from '@/components/user-info';
-import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import type { User } from '@/types';
 
 type Props = {
@@ -12,8 +10,6 @@ type Props = {
 };
 
 export function UserMenuContent({ user }: Props) {
-    const cleanup = useMobileNavigation();
-
     return (
         <>
             <DropdownMenuLabel className="p-0 font-normal">

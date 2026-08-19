@@ -1,6 +1,6 @@
 import { Head, router, usePage } from '@inertiajs/react';
 import { CheckCircle, Video, ExternalLink, Upload, PlusCircle, ArrowLeft, Copy, PartyPopper, Search, XCircle, Lock, Trophy, Ticket } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { PRIZE_IMAGES, TRANSLATIONS } from '@/constants';
 import { useLanguage } from '@/hooks/use-language';
@@ -11,7 +11,6 @@ import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
 import type { AppSettings } from '@/types/app';
 
-const TICKET_BOARD_URL = '/dashboard/ticket-board';
 const CHECK_AVAILABILITY_URL = '/tickets/check-availability';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -34,14 +33,6 @@ type TicketBoardItem = { number: number; taken: boolean };
 
 type TicketBoardPayload = {
     data: TicketBoardItem[];
-    prevCursor?: string | null;
-    nextCursor: string | null;
-};
-
-type TicketBoardPage = {
-    props: {
-        ticketBoard: TicketBoardPayload;
-    };
 };
 
 type PaymentStep =
@@ -80,17 +71,10 @@ export default function Dashboard() {
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    const [tickets, setTickets] = useState<TicketBoardItem[]>(
+    const tickets: TicketBoardItem[] = useMemo(
         () => initialTicketBoard?.data ?? [],
+        [initialTicketBoard],
     );
-    const [prevCursor, setPrevCursor] = useState<string | null>(
-        () => initialTicketBoard?.prevCursor ?? null,
-    );
-    const [nextCursor, setNextCursor] = useState<string | null>(
-        () => initialTicketBoard?.nextCursor ?? null,
-    );
-    const [isLoadingMoreTickets, setIsLoadingMoreTickets] = useState(false);
-    const [isLoadingPrevTickets, setIsLoadingPrevTickets] = useState(false);
 
     // Lucky Search State
     const [luckySearch, setLuckySearch] = useState('');
@@ -242,133 +226,6 @@ export default function Dashboard() {
         };
     }, [luckySearch, settings.ticketSelectionEnabled, tickets]);
 
-    useEffect(() => {
-        if (!settings.ticketSelectionEnabled) {
-            return;
-        }
-
-        const scrollContainer = document.querySelector(
-            '[data-ticket-board-scroll-container="true"]',
-        );
-
-        if (!(scrollContainer instanceof HTMLElement)) {
-            return;
-        }
-
-        const loadNext = () => {
-            if (isLoadingMoreTickets || !nextCursor) {
-                return;
-            }
-
-            setIsLoadingMoreTickets(true);
-
-            router.get(
-                TICKET_BOARD_URL,
-                { cursor: nextCursor, perPage: 60 },
-                {
-                    preserveScroll: true,
-                    preserveState: true,
-                    only: ['ticketBoard'],
-                    onSuccess: (page) => {
-                        const payload = (page as unknown as TicketBoardPage).props
-                            .ticketBoard;
-
-                        setTickets((prev) => {
-                            const existing = new Set(prev.map((t) => t.number));
-                            const merged = [...prev];
-                            for (const item of payload.data) {
-                                if (!existing.has(item.number)) {
-                                    merged.push(item);
-                                }
-                            }
-                            return merged;
-                        });
-
-                        setPrevCursor((current) => current ?? (payload.prevCursor ?? null));
-                        setNextCursor(payload.nextCursor);
-                    },
-                    onFinish: () => {
-                        setIsLoadingMoreTickets(false);
-                    },
-                },
-            );
-        };
-
-        const loadPrev = () => {
-            if (isLoadingPrevTickets || !prevCursor) {
-                return;
-            }
-
-            const beforeHeight = scrollContainer.scrollHeight;
-            const beforeTop = scrollContainer.scrollTop;
-
-            setIsLoadingPrevTickets(true);
-
-            router.get(
-                TICKET_BOARD_URL,
-                { cursor: prevCursor, perPage: 60 },
-                {
-                    preserveScroll: true,
-                    preserveState: true,
-                    only: ['ticketBoard'],
-                    onSuccess: (page) => {
-                        const payload = (page as unknown as TicketBoardPage).props
-                            .ticketBoard;
-
-                        setTickets((prev) => {
-                            const existing = new Set(prev.map((t) => t.number));
-                            const toPrepend: TicketBoardItem[] = [];
-                            for (const item of payload.data) {
-                                if (!existing.has(item.number)) {
-                                    toPrepend.push(item);
-                                }
-                            }
-                            return [...toPrepend, ...prev];
-                        });
-
-                        setPrevCursor(payload.prevCursor ?? null);
-                        setNextCursor((current) => current ?? payload.nextCursor);
-
-                        requestAnimationFrame(() => {
-                            const afterHeight = scrollContainer.scrollHeight;
-                            scrollContainer.scrollTop = beforeTop + (afterHeight - beforeHeight);
-                        });
-                    },
-                    onFinish: () => {
-                        setIsLoadingPrevTickets(false);
-                    },
-                },
-            );
-        };
-
-        const onScroll = () => {
-            const remainingBottom =
-                scrollContainer.scrollHeight -
-                scrollContainer.scrollTop -
-                scrollContainer.clientHeight;
-
-            if (remainingBottom <= 80) {
-                loadNext();
-            }
-
-            if (scrollContainer.scrollTop <= 80) {
-                loadPrev();
-            }
-        };
-
-        scrollContainer.addEventListener('scroll', onScroll, { passive: true });
-
-        return () => {
-            scrollContainer.removeEventListener('scroll', onScroll);
-        };
-    }, [
-        isLoadingMoreTickets,
-        isLoadingPrevTickets,
-        nextCursor,
-        prevCursor,
-        settings.ticketSelectionEnabled,
-    ]);
-
     if (!user) return null; // Safety check during transition
 
     const formatTicket = (num: number) => num.toString();
@@ -383,8 +240,8 @@ export default function Dashboard() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="relative min-h-screen bg-blue-50/40 pt-5 pb-12">
+            <div className="flex h-full flex-1 flex-col gap-3 overflow-x-auto rounded-xl p-3">
+                <div className="relative min-h-screen bg-blue-50/40 pt-3 pb-8">
                     {/* WINNER CELEBRATION MODAL */}
                     <WinnerCelebrationModal
                         isOpen={showWinnerCelebration && !!settings.currentWinner}
@@ -415,7 +272,7 @@ export default function Dashboard() {
 
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         {/* Welcome Header */}
-                        <div className="animate-fade-in-down mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                        <div className="animate-fade-in-down mb-4 flex flex-col justify-between gap-4 md:flex-row md:items-center">
                             <div>
                                 <h1 className="text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
                                     {t.welcome} {user.name}
@@ -424,7 +281,7 @@ export default function Dashboard() {
                         </div>
 
                         {settings.recentWinners && settings.recentWinners.length > 0 && (
-                            <div className="animate-fade-in-down mb-8">
+                            <div className="animate-fade-in-down mb-4">
                                 <div className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
                                     <div className="mb-4 flex items-center justify-between">
                                         <h2 className="flex items-center text-lg font-bold text-navy">
@@ -457,7 +314,7 @@ export default function Dashboard() {
 
                         {/* Live Stream Section */}
                         {settings.isLive && (
-                            <div className="animate-fade-in-down mb-8">
+                            <div className="animate-fade-in-down mb-4">
                                 <div className="relative overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
                                     <div className="absolute top-0 left-0 h-1 w-full animate-pulse bg-gradient-to-r from-red-500 via-royal to-red-500"></div>
                                     <div className="flex items-center justify-between border-b border-blue-50 bg-red-50/50 p-4">
@@ -509,13 +366,124 @@ export default function Dashboard() {
                         )}
 
                         {/* Main Content Area */}
-                        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-                            <div className="space-y-6 lg:col-span-2">
-                                <div className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-blue-100 bg-white p-6 shadow-sm delay-[300ms] md:p-8">
+                        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                            <div className="space-y-4 lg:col-span-2">
+                                <div className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-blue-100 bg-white p-4 shadow-sm delay-[300ms] md:p-6">
                                     <div className="absolute right-0 bottom-0 -mr-16 -mb-16 h-64 w-64 rounded-full bg-royal/5 blur-3xl"></div>
                                     <div className="absolute -top-20 -left-20 h-64 w-64 rounded-full bg-blue-100/50 blur-3xl"></div>
-                                    <div className="relative z-10 grid grid-cols-1 items-center gap-8 md:grid-cols-2">
-                                        <div className="space-y-6">
+                                    <div className="relative z-10 grid grid-cols-1 items-center gap-5 md:grid-cols-2">
+                                        <div className="relative flex w-full justify-center">
+                                            <div className="animate-wiggle-interval relative z-10 w-full max-w-sm overflow-hidden rounded-2xl border border-blue-100 bg-white p-2 shadow-lg shadow-navy/10">
+                                                {/* Conditional Rendering: Winner Card vs Prize Carousel */}
+                                                {settings.winnerAnnouncementMode &&
+                                                settings.currentWinner ? (
+                                                    // --- WINNER ANNOUNCEMENT CARD ---
+                                                    // Height adjusted: h-[28rem] (mobile) to prevent cramping, md:h-96 (desktop)
+                                                    <div className="group relative isolate flex h-[28rem] flex-col items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-royal to-navy p-6 text-center md:h-96">
+                                                        {/* Confetti Background */}
+                                                        <div className="pointer-events-none absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+                                                        {Array.from({
+                                                            length: 20,
+                                                        }).map((_, i) => (
+                                                            <div
+                                                                key={i}
+                                                                className="absolute h-2 w-2 animate-pulse rounded-full bg-white"
+                                                                style={{
+                                                                    left: `${rando * 100}%`,
+                                                                    top: `${rando * 100}%`,
+                                                                    animationDelay: `${rando * 2}s`,
+                                                                }}
+                                                            />
+                                                        ))}
+
+                                                        <div className="relative z-20 w-full">
+                                                            <div className="mb-3 inline-flex animate-bounce items-center justify-center rounded-full bg-white p-3 shadow-xl">
+                                                                <PartyPopper className="h-8 w-8 text-royal md:h-10 md:w-10" />
+                                                            </div>
+                                                            <h2 className="mb-2 text-3xl font-black tracking-wider text-white uppercase drop-shadow-md md:text-5xl">
+                                                                {language ===
+                                                                'en'
+                                                                    ? 'Winner!'
+                                                                    : 'አሸናፊ!'}
+                                                            </h2>
+
+                                                            <div className="mx-auto mt-2 w-full max-w-xs rounded-xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                                                                <div className="mb-2 text-5xl font-black tracking-tighter text-white drop-shadow-sm md:text-7xl">
+                                                                    #
+                                                                    {
+                                                                        settings
+                                                                            .currentWinner
+                                                                            .ticketNumber
+                                                                    }
+                                                                </div>
+                                                                <div className="truncate text-lg font-bold text-blue-100 md:text-xl">
+                                                                    {
+                                                                        settings
+                                                                            .currentWinner
+                                                                            .userName
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    // --- STANDARD PRIZE CAROUSEL ---
+                                                    <div className="group relative isolate overflow-hidden rounded-xl border border-blue-50 bg-white">
+                                                        <div className="relative flex h-48 items-center justify-center overflow-hidden rounded-t-xl bg-blue-50">
+                                                            <div className="absolute inset-0 bg-navy/5 transition-colors group-hover:bg-navy/10"></div>
+                                                            <div className="pointer-events-none absolute inset-0 z-10 opacity-100">
+                                                                <div className="absolute top-52 left-52 z-20 flex h-64 w-64 -translate-x-24 -translate-y-24 items-center justify-center">
+                                                                    <img
+                                                                        src="https://i.postimg.cc/hvkdcQC4/rebbon-final.png"
+                                                                        alt="Ribbon"
+                                                                        className="h-full w-full scale-[2] object-contain drop-shadow-2xl"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            {/* Carousel Images */}
+                                                            {displayImages.map(
+                                                                (
+                                                                    img,
+                                                                    index,
+                                                                ) => (
+                                                                    <img
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        src={
+                                                                            img
+                                                                        }
+                                                                        alt={`${settings.prizeName} view ${index + 1}`}
+                                                                        className={`absolute inset-0 z-0 h-full w-full rounded-t-xl object-cover transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                                                                    />
+                                                                ),
+                                                            )}
+
+                                                            <div className="absolute inset-0 z-20 flex items-end justify-end p-2">
+                                                                <span className="rotate-[-2deg] transform rounded-lg border border-blue-100 bg-white/90 px-2 py-1 text-xs font-bold text-navy shadow-md backdrop-blur-md">
+                                                                    {
+                                                                        settings.prizeName
+                                                                    }
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="p-4">
+                                                            <div className="flex items-end justify-between">
+                                                                 <div>
+                                                                     <h3 className="text-lg leading-tight font-extrabold text-navy">
+                                                                         {
+                                                                             settings.prizeName
+                                                                         }
+                                                                     </h3>
+                                                                 </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
                                             <div className="text-center md:text-left">
                                                 <div className="mb-3 inline-block rounded-full border border-royal/20 bg-royal/10 px-4 py-1 text-xs font-bold text-royal">
                                                     {settings.daysRemaining ===
@@ -825,125 +793,14 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="relative flex w-full justify-center">
-                                            <div className="animate-wiggle-interval relative z-10 w-full max-w-sm overflow-hidden rounded-2xl border border-blue-100 bg-white p-2 shadow-lg shadow-navy/10">
-                                                {/* Conditional Rendering: Winner Card vs Prize Carousel */}
-                                                {settings.winnerAnnouncementMode &&
-                                                settings.currentWinner ? (
-                                                    // --- WINNER ANNOUNCEMENT CARD ---
-                                                    // Height adjusted: h-[28rem] (mobile) to prevent cramping, md:h-96 (desktop)
-                                                    <div className="group relative isolate flex h-[28rem] flex-col items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-royal to-navy p-6 text-center md:h-96">
-                                                        {/* Confetti Background */}
-                                                        <div className="pointer-events-none absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
-                                                        {Array.from({
-                                                            length: 20,
-                                                        }).map((_, i) => (
-                                                            <div
-                                                                key={i}
-                                                                className="absolute h-2 w-2 animate-pulse rounded-full bg-white"
-                                                                style={{
-                                                                    left: `${rando * 100}%`,
-                                                                    top: `${rando * 100}%`,
-                                                                    animationDelay: `${rando * 2}s`,
-                                                                }}
-                                                            />
-                                                        ))}
-
-                                                        <div className="relative z-20 w-full">
-                                                            <div className="mb-3 inline-flex animate-bounce items-center justify-center rounded-full bg-white p-3 shadow-xl">
-                                                                <PartyPopper className="h-8 w-8 text-royal md:h-10 md:w-10" />
-                                                            </div>
-                                                            <h2 className="mb-2 text-3xl font-black tracking-wider text-white uppercase drop-shadow-md md:text-5xl">
-                                                                {language ===
-                                                                'en'
-                                                                    ? 'Winner!'
-                                                                    : 'አሸናፊ!'}
-                                                            </h2>
-
-                                                            <div className="mx-auto mt-2 w-full max-w-xs rounded-xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
-                                                                <div className="mb-2 text-5xl font-black tracking-tighter text-white drop-shadow-sm md:text-7xl">
-                                                                    #
-                                                                    {
-                                                                        settings
-                                                                            .currentWinner
-                                                                            .ticketNumber
-                                                                    }
-                                                                </div>
-                                                                <div className="truncate text-lg font-bold text-blue-100 md:text-xl">
-                                                                    {
-                                                                        settings
-                                                                            .currentWinner
-                                                                            .userName
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    // --- STANDARD PRIZE CAROUSEL ---
-                                                    <div className="group relative isolate overflow-hidden rounded-xl border border-blue-50 bg-white">
-                                                        <div className="relative flex h-48 items-center justify-center overflow-hidden rounded-t-xl bg-blue-50">
-                                                            <div className="absolute inset-0 bg-navy/5 transition-colors group-hover:bg-navy/10"></div>
-                                                            <div className="pointer-events-none absolute inset-0 z-10 opacity-100">
-                                                                <div className="absolute top-52 left-52 z-20 flex h-64 w-64 -translate-x-24 -translate-y-24 items-center justify-center">
-                                                                    <img
-                                                                        src="https://i.postimg.cc/hvkdcQC4/rebbon-final.png"
-                                                                        alt="Ribbon"
-                                                                        className="h-full w-full scale-[2] object-contain drop-shadow-2xl"
-                                                                    />
-                                                                </div>
-                                                            </div>
-
-                                                            {/* Carousel Images */}
-                                                            {displayImages.map(
-                                                                (
-                                                                    img,
-                                                                    index,
-                                                                ) => (
-                                                                    <img
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        src={
-                                                                            img
-                                                                        }
-                                                                        alt={`${settings.prizeName} view ${index + 1}`}
-                                                                        className={`absolute inset-0 z-0 h-full w-full rounded-t-xl object-cover transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
-                                                                    />
-                                                                ),
-                                                            )}
-
-                                                            <div className="absolute inset-0 z-20 flex items-end justify-end p-2">
-                                                                <span className="rotate-[-2deg] transform rounded-lg border border-blue-100 bg-white/90 px-2 py-1 text-xs font-bold text-navy shadow-md backdrop-blur-md">
-                                                                    {
-                                                                        settings.prizeName
-                                                                    }
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="p-4">
-                                                            <div className="flex items-end justify-between">
-                                                                 <div>
-                                                                     <h3 className="text-lg leading-tight font-extrabold text-navy">
-                                                                         {
-                                                                             settings.prizeName
-                                                                         }
-                                                                     </h3>
-                                                                 </div>
-                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-6">
-                                <div className="animate-fade-in-up rounded-2xl border border-blue-100 bg-white p-6 shadow-sm delay-[450ms]">
+                            <div className="space-y-4">
+                                <div className="animate-fade-in-up rounded-2xl border border-blue-100 bg-white p-4 shadow-sm delay-[450ms]">
                                     {/* SEARCH BOX CONTAINER (LANDING PAGE STYLE) */}
-                                    <div className="mb-6 flex flex-col">
+                                    <div className="mb-4 flex flex-col">
                                         <div className="flex items-start justify-between">
                                             <h3 className="mb-1 flex items-center text-lg font-bold text-navy">
                                                 <Search className="mr-2 h-5 w-5 text-royal" />
@@ -974,7 +831,7 @@ export default function Dashboard() {
                                     </div>
 
                                     {/* SEARCH INPUT */}
-                                    <div className="relative mb-6">
+                                    <div className="relative mb-4">
                                         <input
                                             type="number"
                                             disabled={
@@ -1024,7 +881,7 @@ export default function Dashboard() {
                                     {/* STATUS MESSAGES */}
                                     {luckyStatus === 'AVAILABLE' &&
                                         settings.ticketSelectionEnabled && (
-                                            <div className="animate-fade-in-down mb-6">
+                                            <div className="animate-fade-in-down mb-4">
                                                 <div className="rounded-xl border border-blue-100 bg-blue-50 p-4">
                                                     <div className="mb-3 flex items-center">
                                                         <CheckCircle className="mr-2 h-5 w-5 text-royal" />
@@ -1061,7 +918,7 @@ export default function Dashboard() {
 
                                     {luckyStatus === 'TAKEN' &&
                                         settings.ticketSelectionEnabled && (
-                                            <div className="animate-fade-in-down mb-6">
+                                            <div className="animate-fade-in-down mb-4">
                                                 <div className="flex items-center rounded-xl border border-red-100 bg-red-50 p-4">
                                                     <XCircle className="mr-2 h-5 w-5 text-red-500" />
                                                     <p className="text-sm font-bold text-red-700">

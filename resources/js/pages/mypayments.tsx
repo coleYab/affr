@@ -1,6 +1,13 @@
 import { Head } from '@inertiajs/react';
-import { Banknote, CheckCircle, Clock, FileText, XCircle } from 'lucide-react';
+import { Banknote, CalendarDays, CheckCircle, Clock, Eye, XCircle } from 'lucide-react';
 import type { ReactElement } from 'react';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 import { useLanguage } from '@/hooks/use-language';
 import AppLayout from '@/layouts/app-layout';
 import { formatDateTime } from '@/lib/utils';
@@ -19,16 +26,12 @@ const TRANSLATIONS = {
     en: {
         pageTitle: 'My Payments',
         subtitle: 'Review your payment history',
-        table: {
-            date: 'Date',
-            amount: 'Amount',
-            status: 'Status',
-            receipt: 'Receipt',
-        },
-        receipt: {
-            view: 'View',
-            missing: '—',
-        },
+        date: 'Date',
+        amount: 'Amount',
+        status: 'Status',
+        receipt: 'Receipt',
+        receiptDialogTitle: 'Payment receipt',
+        receiptDialogClose: 'Close',
         empty: {
             title: 'No payments yet',
             desc: 'Your approved payments will appear here.',
@@ -37,16 +40,12 @@ const TRANSLATIONS = {
     am: {
         pageTitle: 'የእኔ ክፍያዎች',
         subtitle: 'የክፍያ ታሪክዎን ይመልከቱ',
-        table: {
-            date: 'ቀን',
-            amount: 'መጠን',
-            status: 'ሁኔታ',
-            receipt: 'ደረሰኝ',
-        },
-        receipt: {
-            view: 'አሳይ',
-            missing: '—',
-        },
+        date: 'ቀን',
+        amount: 'መጠን',
+        status: 'ሁኔታ',
+        receipt: 'ደረሰኝ',
+        receiptDialogTitle: 'የክፍያ ደረሰኝ',
+        receiptDialogClose: 'ዝጋ',
         empty: {
             title: 'ምንም ክፍያ የለም',
             desc: 'የጸደቁ ክፍያዎችዎ እዚህ ይታያሉ።',
@@ -80,34 +79,33 @@ export default function MyPayments({ payments } : PageProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t.pageTitle} />
-            <div className="flex h-full flex-1 flex-col gap-4 bg-blue-50/40 p-4 sm:p-6">
+            <div className="flex h-full flex-1 flex-col gap-3 bg-blue-50/40 p-3 sm:p-4">
                 {/* Header Section */}
-                <div className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
-                    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm">
+                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                         <div>
                             <span className="inline-flex items-center gap-2 rounded-full border border-royal/20 bg-royal/5 px-3 py-1 text-[10px] font-bold tracking-wide text-royal uppercase">
                                 <Banknote className="h-3.5 w-3.5" />
                                 {t.pageTitle}
                             </span>
-                            <h1 className="mt-3 text-2xl font-extrabold tracking-tight text-navy">{t.pageTitle}</h1>
-                            <p className="mt-1 text-sm text-stone-500">{t.subtitle}</p>
+                            <h1 className="mt-2 text-xl font-extrabold tracking-tight text-navy sm:text-2xl">{t.pageTitle}</h1>
+                            <p className="mt-0.5 text-sm text-stone-500">{t.subtitle}</p>
+                        </div>
+                        <div className="rounded-xl border border-blue-100 bg-blue-50/40 px-4 py-2 text-center">
+                            <div className="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+                                {t.amount}
+                            </div>
+                            <div className="text-lg font-black text-royal">
+                                {payments.length}
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Table Section */}
-                <div className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
-                    <div className="border-b border-blue-50 p-5">
-                        <div className="flex items-center justify-between">
-                            <h2 className="flex items-center text-sm font-bold text-navy">
-                                <FileText className="mr-2 h-4 w-4 text-royal" />
-                                {t.pageTitle}
-                            </h2>
-                        </div>
-                    </div>
-
+                {/* Payments Card List */}
+                <div className="flex-1 space-y-3 pb-2">
                     {payments.length === 0 ? (
-                        <div className="p-16 text-center">
+                        <div className="rounded-2xl border border-blue-100 bg-white p-12 text-center shadow-sm">
                             <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
                                 <Banknote className="h-7 w-7 text-royal/60" />
                             </div>
@@ -115,69 +113,64 @@ export default function MyPayments({ payments } : PageProps) {
                             <div className="mt-1 text-xs text-stone-500">{t.empty.desc}</div>
                         </div>
                     ) : (
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full">
-                                <thead>
-                                    <tr className="bg-blue-50/50 text-left">
-                                        <th className="px-5 py-4 text-xs font-bold tracking-wider text-stone-500 uppercase">
-                                            {t.table.date}
-                                        </th>
-                                        <th className="px-5 py-4 text-xs font-bold tracking-wider text-stone-500 uppercase">
-                                            {t.table.amount}
-                                        </th>
-                                        <th className="px-5 py-4 text-xs font-bold tracking-wider text-stone-500 uppercase">
-                                            {t.table.status}
-                                        </th>
-                                        <th className="px-5 py-4 text-xs font-bold tracking-wider text-stone-500 uppercase">
-                                            {t.table.receipt}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-blue-50">
-                                    {payments.map((payment) => {
-                                        const meta = statusStyles[payment.status];
-                                        return (
-                                            <tr key={payment.id} className="transition-colors hover:bg-blue-50/30">
-                                                <td className="px-5 py-4 text-sm text-stone-700">
-                                                    <span className="font-mono text-xs text-stone-600">
-                                                        {formatDateTime(payment.date)}
-                                                    </span>
-                                                </td>
-                                                <td className="px-5 py-4">
-                                                    <span className="inline-flex items-center rounded-lg bg-blue-50 px-2.5 py-1 text-sm font-black text-navy">
-                                                        {payment.amount.toLocaleString()} ETB
-                                                    </span>
-                                                </td>
-                                                <td className="px-5 py-4">
-                                                    <span
-                                                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${meta.className}`}
+                        payments.map((payment) => {
+                            const meta = statusStyles[payment.status];
+                            return (
+                                <div
+                                    key={payment.id}
+                                    className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+                                >
+                                    <div className="flex items-center justify-between gap-3">
+                                        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-500">
+                                            <CalendarDays className="h-4 w-4 text-royal/70" />
+                                            {formatDateTime(payment.date)}
+                                        </div>
+                                        <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${meta.className}`}>
+                                            {meta.icon}
+                                            {payment.status}
+                                        </span>
+                                    </div>
+
+                                    <div className="mt-3 flex items-center justify-between gap-3">
+                                        <span className="inline-flex items-center rounded-lg bg-blue-50 px-3 py-1.5 text-base font-black text-navy">
+                                            {payment.amount.toLocaleString()} ETB
+                                        </span>
+
+                                        {payment.receiptUrl ? (
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex items-center gap-1.5 rounded-full bg-royal/5 px-4 py-2 text-xs font-bold text-royal transition-colors hover:bg-royal/10"
                                                     >
-                                                        {meta.icon}
-                                                        {payment.status}
-                                                    </span>
-                                                </td>
-                                                <td className="px-5 py-4">
-                                                    {payment.receiptUrl ? (
-                                                        <a
-                                                            href={payment.receiptUrl}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="rounded-full bg-royal/5 px-3 py-1 text-xs font-bold text-royal transition-colors hover:bg-royal/10"
-                                                        >
-                                                            {t.receipt.view}
-                                                        </a>
-                                                    ) : (
-                                                        <span className="text-xs text-stone-400">
-                                                            {t.receipt.missing}
-                                                        </span>
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
+                                                        <Eye className="h-4 w-4" />
+                                                        {t.receipt}
+                                                    </button>
+                                                </DialogTrigger>
+                                                <DialogContent className="max-w-lg p-4 sm:p-6">
+                                                    <DialogHeader>
+                                                        <DialogTitle>
+                                                            {t.receiptDialogTitle}
+                                                        </DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="mt-2 overflow-hidden rounded-xl border border-blue-100 bg-blue-50/40 p-2">
+                                                        <img
+                                                            src={payment.receiptUrl}
+                                                            alt={t.receiptDialogTitle}
+                                                            className="mx-auto max-h-[70vh] w-auto rounded-lg object-contain"
+                                                        />
+                                                    </div>
+                                                </DialogContent>
+                                            </Dialog>
+                                        ) : (
+                                            <span className="text-xs text-stone-400">
+                                                —
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })
                     )}
                 </div>
             </div>

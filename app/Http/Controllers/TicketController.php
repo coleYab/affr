@@ -31,7 +31,7 @@ class TicketController extends Controller
             ->get(['id', 'ticketNumber', 'status', 'reservedAt', 'paymentId']);
 
         return Inertia::render('dashboard', [
-            'ticketBoard' => $this->ticketBoard($request),
+            'ticketBoard' => $this->ticketBoard($request, forcePerPage: $request->routeIs('dashboard') ? 1500 : null),
             'userSummary' => [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -47,10 +47,10 @@ class TicketController extends Controller
     /**
      * @return array{data: array<int, array{number:int, taken:bool}>, prevCursor: ?string, nextCursor: ?string}
      */
-    protected function ticketBoard(Request $request, ?int $defaultStartAt = null): array
+    protected function ticketBoard(Request $request, ?int $defaultStartAt = null, ?int $forcePerPage = null): array
     {
-        $perPage = (int) $request->integer('perPage', 60);
-        $perPage = max(12, min(120, $perPage));
+        $perPage = $forcePerPage ?? (int) $request->integer('perPage', 60);
+        $perPage = max(12, min(2000, $perPage));
 
         $cursor = $request->string('cursor')->toString();
         $cursor = $cursor !== '' ? $cursor : null;
