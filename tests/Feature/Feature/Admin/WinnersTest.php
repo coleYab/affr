@@ -28,7 +28,7 @@ it('forbids non-admin users from announcing winners', function () {
 
 it('announces a winner and notifies the user (in-app + email)', function () {
     Notification::fake();
-    $settings = AppSetting::factory()->create(['cycle' => 7, 'prize_name' => 'iPhone 17 Pro']);
+    $settings = AppSetting::factory()->create(['cycle' => 7, 'prize_name' => 'iPhone 17 Pro Max']);
 
     $admin = User::factory()->create(['is_admin' => true]);
     $winnerUser = User::factory()->create(['is_admin' => false]);

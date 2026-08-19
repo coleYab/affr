@@ -1,6 +1,13 @@
 import { Head } from '@inertiajs/react';
-import { CheckCircle, Clock, Ticket as TicketIcon, XCircle, AlertCircle, Calendar } from 'lucide-react';
+import { AlertCircle, Calendar, Ticket as TicketIcon } from 'lucide-react';
 import type { ReactElement } from 'react';
+import { Badge } from '@/components/ui/badge';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import { useLanguage } from '@/hooks/use-language';
 import AppLayout from '@/layouts/app-layout';
 import { mytickets } from '@/routes/user';
@@ -59,26 +66,22 @@ const TRANSLATIONS = {
     },
 } as const;
 
-const statusStyles: Record<TicketStatus, { label: string; className: string; icon: ReactElement }> = {
+const statusStyles: Record<TicketStatus, { label: string; badge: ReactElement }> = {
     AVAILABLE: {
         label: 'AVAILABLE',
-        className: 'border-royal/20 bg-royal/5 text-royal',
-        icon: <CheckCircle className="h-3.5 w-3.5" />,
+        badge: <Badge className="bg-royal">AVAILABLE</Badge>,
     },
     PENDING: {
         label: 'PENDING',
-        className: 'border-amber-200 bg-amber-50 text-amber-700',
-        icon: <Clock className="h-3.5 w-3.5" />,
+        badge: <Badge variant="outline">PENDING</Badge>,
     },
     SOLD: {
         label: 'SOLD',
-        className: 'border-blue-200 bg-blue-50 text-navy',
-        icon: <TicketIcon className="h-3.5 w-3.5" />,
+        badge: <Badge className="border-blue-200 bg-blue-50 text-navy">SOLD</Badge>,
     },
     VOID: {
         label: 'VOID',
-        className: 'border-stone-200 bg-stone-50 text-stone-600',
-        icon: <XCircle className="h-3.5 w-3.5" />,
+        badge: <Badge variant="secondary">VOID</Badge>,
     },
 };
 
@@ -90,81 +93,85 @@ export default function Tickets({ tickets }: PageProps) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t.pageTitle} />
 
-            <div className="flex h-full flex-1 flex-col gap-3 bg-blue-50/40 p-3 sm:p-4">
-                {/* Header Section */}
-                <div className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                <div className="space-y-6 animate-fade-in-up">
+                    {/* Header Section */}
+                    <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                         <div>
-                            <span className="inline-flex items-center gap-2 rounded-full border border-royal/20 bg-royal/5 px-3 py-1 text-[10px] font-bold tracking-wide text-royal uppercase">
-                                <TicketIcon className="h-3.5 w-3.5" />
+                            <span className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-[10px] font-bold tracking-wide text-stone-600 uppercase">
+                                <TicketIcon className="h-3.5 w-3.5 text-royal" />
                                 {t.pageTitle}
                             </span>
-                            <h1 className="mt-2 text-xl font-extrabold tracking-tight text-navy sm:text-2xl">{t.pageTitle}</h1>
-                            <p className="mt-0.5 text-sm text-stone-500">{t.subtitle}</p>
+                            <h1 className="mt-2 text-2xl font-bold text-stone-800">{t.pageTitle}</h1>
+                            <p className="text-sm text-stone-500">{t.subtitle}</p>
                         </div>
-                        <div className="rounded-xl border border-blue-100 bg-blue-50/40 px-4 py-2 text-center">
+
+                        <div className="rounded-xl border border-stone-200 bg-white px-4 py-3 shadow-sm">
                             <div className="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
                                 {t.ticketNumber}
                             </div>
-                            <div className="text-lg font-black text-royal">
+                            <div className="mt-1 text-xl font-black text-stone-900">
                                 {tickets.length}
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Tickets Card List */}
-                <div className="flex-1 space-y-3 pb-2">
-                    {tickets.length === 0 ? (
-                        <div className="rounded-2xl border border-blue-100 bg-white p-12 text-center shadow-sm">
-                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
-                                <AlertCircle className="h-7 w-7 text-royal/60" />
-                            </div>
-                            <div className="text-sm font-bold text-navy">{t.empty.title}</div>
-                            <div className="mt-1 text-xs text-stone-500">{t.empty.desc}</div>
-                        </div>
-                    ) : (
-                        tickets.map((ticket) => {
-                            const meta = statusStyles[ticket.status] || statusStyles.VOID;
-                            return (
-                                <div
-                                    key={ticket.id}
-                                    className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
-                                >
-                                    <div className="flex shrink-0 flex-col items-center justify-center rounded-xl bg-blue-50/80 px-4 py-2.5">
-                                        <span className="text-[10px] font-bold tracking-wider text-stone-400 uppercase">
-                                            {t.ticketNumber}
-                                        </span>
-                                        <span className="text-xl font-black text-navy">
-                                            #{ticket.ticketNumber}
-                                        </span>
-                                    </div>
-
-                                    <div className="min-w-0 flex-1">
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <span
-                                                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${meta.className}`}
-                                            >
-                                                {meta.icon}
-                                                {meta.label}
-                                            </span>
-                                            <span className="rounded-full bg-stone-100 px-2.5 py-1 text-[10px] font-bold text-stone-600 uppercase">
-                                                {ticket.paymentId
-                                                    ? t.purchased
-                                                    : t.systemAssigned}
-                                            </span>
-                                        </div>
-                                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-stone-500">
-                                            <span className="inline-flex items-center gap-1.5">
-                                                <Calendar className="h-3.5 w-3.5 text-royal/70" />
-                                                {new Date(ticket.reservedAt).toLocaleDateString()}
-                                            </span>
-                                        </div>
-                                    </div>
+                    {/* Tickets Card List */}
+                    <div className="grid grid-cols-1 gap-4">
+                        {tickets.length === 0 ? (
+                            <div className="rounded-2xl border border-stone-200 bg-white p-12 text-center shadow-sm">
+                                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-stone-50">
+                                    <AlertCircle className="h-7 w-7 text-royal" />
                                 </div>
-                            );
-                        })
-                    )}
+                                <h3 className="text-xl font-bold text-stone-800">{t.empty.title}</h3>
+                                <p className="mt-2 text-stone-500">{t.empty.desc}</p>
+                            </div>
+                        ) : (
+                            tickets.map((ticket) => {
+                                const meta = statusStyles[ticket.status] || statusStyles.VOID;
+                                return (
+                                    <Card
+                                        key={ticket.id}
+                                        className="overflow-hidden border-stone-200 shadow-sm"
+                                    >
+                                        <CardHeader className="space-y-1 bg-stone-50/60">
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <CardTitle className="text-base text-stone-900">
+                                                        <span className="text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+                                                            {t.ticketNumber}{' '}
+                                                        </span>
+                                                        <span className="text-2xl font-black text-navy">
+                                                            #{ticket.ticketNumber}
+                                                        </span>
+                                                    </CardTitle>
+                                                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                                                        {meta.badge}
+                                                        <Badge variant="secondary" className="text-[10px]">
+                                                            {ticket.paymentId
+                                                                ? t.purchased
+                                                                : t.systemAssigned}
+                                                        </Badge>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent className="space-y-3">
+                                            <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-stone-50 p-3">
+                                                <div className="flex items-center gap-2 text-xs font-bold text-stone-700">
+                                                    <Calendar className="h-4 w-4 text-royal" />
+                                                    {t.assignedDate}
+                                                </div>
+                                                <div className="text-sm font-black text-stone-900">
+                                                    {new Date(ticket.reservedAt).toLocaleDateString()}
+                                                </div>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                );
+                            })
+                        )}
+                    </div>
                 </div>
             </div>
         </AppLayout>

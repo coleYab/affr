@@ -23,7 +23,7 @@ class WinnerFactory extends Factory
             'place' => 1,
             'user_id' => User::factory(),
             'ticket_id' => Ticket::factory(),
-            'prize_name' => 'iPhone 17 Pro',
+            'prize_name' => 'iPhone 17 Pro Max',
             'prize_amount' => null,
             'announced_at' => now(),
         ];

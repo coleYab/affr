@@ -1,6 +1,14 @@
 import { Head } from '@inertiajs/react';
-import { Banknote, CalendarDays, CheckCircle, Clock, Eye, XCircle } from 'lucide-react';
+import { Banknote, CalendarDays, Eye } from 'lucide-react';
 import type { ReactElement } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import {
     Dialog,
     DialogContent,
@@ -53,18 +61,15 @@ const TRANSLATIONS = {
     },
 } as const;
 
-const statusStyles: Record<PaymentRequest['status'], { className: string; icon: ReactElement }> = {
+const statusStyles: Record<PaymentRequest['status'], { badge: ReactElement }> = {
     APPROVED: {
-        className: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-        icon: <CheckCircle className="h-4 w-4" />,
+        badge: <Badge className="bg-royal">APPROVED</Badge>,
     },
     PENDING: {
-        className: 'border-amber-200 bg-amber-50 text-amber-700',
-        icon: <Clock className="h-4 w-4" />,
+        badge: <Badge variant="outline">PENDING</Badge>,
     },
     REJECTED: {
-        className: 'border-red-200 bg-red-50 text-red-700',
-        icon: <XCircle className="h-4 w-4" />,
+        badge: <Badge variant="destructive">REJECTED</Badge>,
     },
 };
 
@@ -79,99 +84,105 @@ export default function MyPayments({ payments } : PageProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t.pageTitle} />
-            <div className="flex h-full flex-1 flex-col gap-3 bg-blue-50/40 p-3 sm:p-4">
-                {/* Header Section */}
-                <div className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                <div className="space-y-6 animate-fade-in-up">
+                    {/* Header Section */}
+                    <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                         <div>
-                            <span className="inline-flex items-center gap-2 rounded-full border border-royal/20 bg-royal/5 px-3 py-1 text-[10px] font-bold tracking-wide text-royal uppercase">
-                                <Banknote className="h-3.5 w-3.5" />
+                            <span className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-[10px] font-bold tracking-wide text-stone-600 uppercase">
+                                <Banknote className="h-3.5 w-3.5 text-royal" />
                                 {t.pageTitle}
                             </span>
-                            <h1 className="mt-2 text-xl font-extrabold tracking-tight text-navy sm:text-2xl">{t.pageTitle}</h1>
-                            <p className="mt-0.5 text-sm text-stone-500">{t.subtitle}</p>
+                            <h1 className="mt-2 text-2xl font-bold text-stone-800">{t.pageTitle}</h1>
+                            <p className="text-sm text-stone-500">{t.subtitle}</p>
                         </div>
-                        <div className="rounded-xl border border-blue-100 bg-blue-50/40 px-4 py-2 text-center">
+
+                        <div className="rounded-xl border border-stone-200 bg-white px-4 py-3 shadow-sm">
                             <div className="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
                                 {t.amount}
                             </div>
-                            <div className="text-lg font-black text-royal">
+                            <div className="mt-1 text-xl font-black text-stone-900">
                                 {payments.length}
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Payments Card List */}
-                <div className="flex-1 space-y-3 pb-2">
-                    {payments.length === 0 ? (
-                        <div className="rounded-2xl border border-blue-100 bg-white p-12 text-center shadow-sm">
-                            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
-                                <Banknote className="h-7 w-7 text-royal/60" />
-                            </div>
-                            <div className="text-sm font-bold text-navy">{t.empty.title}</div>
-                            <div className="mt-1 text-xs text-stone-500">{t.empty.desc}</div>
-                        </div>
-                    ) : (
-                        payments.map((payment) => {
-                            const meta = statusStyles[payment.status];
-                            return (
-                                <div
-                                    key={payment.id}
-                                    className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
-                                >
-                                    <div className="flex items-center justify-between gap-3">
-                                        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-500">
-                                            <CalendarDays className="h-4 w-4 text-royal/70" />
-                                            {formatDateTime(payment.date)}
-                                        </div>
-                                        <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${meta.className}`}>
-                                            {meta.icon}
-                                            {payment.status}
-                                        </span>
-                                    </div>
-
-                                    <div className="mt-3 flex items-center justify-between gap-3">
-                                        <span className="inline-flex items-center rounded-lg bg-blue-50 px-3 py-1.5 text-base font-black text-navy">
-                                            {payment.amount.toLocaleString()} ETB
-                                        </span>
-
-                                        {payment.receiptUrl ? (
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <button
-                                                        type="button"
-                                                        className="inline-flex items-center gap-1.5 rounded-full bg-royal/5 px-4 py-2 text-xs font-bold text-royal transition-colors hover:bg-royal/10"
-                                                    >
-                                                        <Eye className="h-4 w-4" />
-                                                        {t.receipt}
-                                                    </button>
-                                                </DialogTrigger>
-                                                <DialogContent className="max-w-lg p-4 sm:p-6">
-                                                    <DialogHeader>
-                                                        <DialogTitle>
-                                                            {t.receiptDialogTitle}
-                                                        </DialogTitle>
-                                                    </DialogHeader>
-                                                    <div className="mt-2 overflow-hidden rounded-xl border border-blue-100 bg-blue-50/40 p-2">
-                                                        <img
-                                                            src={payment.receiptUrl}
-                                                            alt={t.receiptDialogTitle}
-                                                            className="mx-auto max-h-[70vh] w-auto rounded-lg object-contain"
-                                                        />
-                                                    </div>
-                                                </DialogContent>
-                                            </Dialog>
-                                        ) : (
-                                            <span className="text-xs text-stone-400">
-                                                —
-                                            </span>
-                                        )}
-                                    </div>
+                    {/* Payments Card List */}
+                    <div className="grid grid-cols-1 gap-4">
+                        {payments.length === 0 ? (
+                            <div className="rounded-2xl border border-stone-200 bg-white p-12 text-center shadow-sm">
+                                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-stone-50">
+                                    <Banknote className="h-7 w-7 text-royal" />
                                 </div>
-                            );
-                        })
-                    )}
+                                <h3 className="text-xl font-bold text-stone-800">{t.empty.title}</h3>
+                                <p className="mt-2 text-stone-500">{t.empty.desc}</p>
+                            </div>
+                        ) : (
+                            payments.map((payment) => {
+                                const meta = statusStyles[payment.status];
+                                return (
+                                    <Card
+                                        key={payment.id}
+                                        className="overflow-hidden border-stone-200 shadow-sm"
+                                    >
+                                        <CardHeader className="space-y-1 bg-stone-50/60">
+                                            <div className="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <CardTitle className="text-base text-stone-900">
+                                                        {new Date(payment.date).toLocaleDateString()}
+                                                    </CardTitle>
+                                                    <div className="mt-1 flex items-center gap-2 text-xs text-stone-400">
+                                                        <CalendarDays className="h-3.5 w-3.5 text-royal/70" />
+                                                        {formatDateTime(payment.date)}
+                                                    </div>
+                                                </div>
+                                                {meta.badge}
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent className="space-y-3">
+                                            <div className="flex items-center justify-between">
+                                                <div className="text-xs font-bold tracking-wider text-stone-500 uppercase">
+                                                    {t.amount}
+                                                </div>
+                                                <div className="text-sm font-black text-navy">
+                                                    {payment.amount.toLocaleString()} ETB
+                                                </div>
+                                            </div>
+                                        </CardContent>
+                                        <div className="border-t bg-white p-2">
+                                            {payment.receiptUrl ? (
+                                                <Dialog>
+                                                    <DialogTrigger asChild>
+                                                        <Button
+                                                            variant="outline"
+                                                            className="w-full rounded-xl"
+                                                        >
+                                                            <Eye className="mr-2 h-4 w-4" />
+                                                            {t.receipt}
+                                                        </Button>
+                                                    </DialogTrigger>
+                                                    <DialogContent className="max-w-lg p-4 sm:p-6">
+                                                        <DialogHeader>
+                                                            <DialogTitle>
+                                                                {t.receiptDialogTitle}
+                                                            </DialogTitle>
+                                                        </DialogHeader>
+                                                        <div className="mt-2 overflow-hidden rounded-xl border border-stone-200 bg-stone-50 p-2">
+                                                            <img
+                                                                src={payment.receiptUrl}
+                                                                alt={t.receiptDialogTitle}
+                                                                className="mx-auto max-h-[70vh] w-auto rounded-lg object-contain"
+                                                            />
+                                                        </div>
+                                                    </DialogContent>
+                                                </Dialog>
+                                            ) : null}
+                                        </div>
+                                    </Card>
+                                );
+                            })
+                        )}
+                    </div>
                 </div>
             </div>
         </AppLayout>

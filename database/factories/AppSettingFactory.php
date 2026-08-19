@@ -20,7 +20,7 @@ class AppSettingFactory extends Factory
             'cycle' => 1,
             'days_remaining' => 14,
             'draw_date' => now()->addDays(14),
-            'prize_name' => 'iPhone 17 Pro',
+            'prize_name' => 'iPhone 17 Pro Max',
             'prize_value' => '1,199 USD',
             'prize_image' => null,
             'prize_images' => null,

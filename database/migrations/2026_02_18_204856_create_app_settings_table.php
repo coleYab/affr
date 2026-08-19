@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('cycle')->default(1);
             $table->unsignedInteger('days_remaining')->default(14);
             $table->date('draw_date');
-            $table->string('prize_name')->default('iPhone 17 Pro');
+            $table->string('prize_name')->default('iPhone 17 Pro Max');
             $table->string('prize_value')->default('1,199 USD');
             $table->string('prize_image')->nullable();
             $table->json('prize_images')->nullable();

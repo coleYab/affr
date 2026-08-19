@@ -6,12 +6,12 @@ export const TRANSLATIONS = {
         back: "Back",
     },
     nav: { home: "Home", how: "How It Works", join: "Join Now", login: "Login", register: "Register", logout: "Logout", dashboard: "Dashboard", secure: "Secure Session", profile: "Profile" },
-    hero: { subtitle: "NEXT DRAW IN", subtitle_today: "TODAY ONE LUCKY PERSON TAKES THE IPHONE 17 PRO", title1: "Save Together.", title2: "Win the iPhone 17 Pro.", desc: "AfroEqub blends Ethiopia's trusted equb tradition with secure digital payments. Contribute monthly, claim your lucky number, and walk away with a brand-new iPhone 17 Pro in a fully transparent live draw.", cta: "Claim Your Lucky Number", watch: "Watch Video", prize_name: "iPhone 17 Pro" },
+    hero: { subtitle: "NEXT DRAW IN", subtitle_today: "TODAY ONE LUCKY PERSON TAKES THE IPHONE 17 PRO MAX", title1: "Save Together.", title2: "Win the iPhone 17 Pro Max.", desc: "AfroEqub blends Ethiopia's trusted equb tradition with secure digital payments. Contribute monthly, claim your lucky number, and walk away with a brand-new iPhone 17 Pro Max in a fully transparent live draw.", cta: "Claim Your Lucky Number", watch: "Watch Video", prize_name: "iPhone 17 Pro Max" },
     stats: { taken: "Taken Numbers", lucky: "Lucky Numbers" },
     features: {
         heading_sub: "How It Works",
         heading_main: "Three Steps to Your",
-        heading_highlight: "New iPhone 17 Pro",
+        heading_highlight: "New iPhone 17 Pro Max",
         desc: "We've digitized the traditional Equb system to make it secure, transparent, and easy to access from anywhere.",
         step1_title: "Register & Verify",
         step1_desc: "Create your secure account using your phone number.",
@@ -21,7 +21,7 @@ export const TRANSLATIONS = {
         step3_desc: "Participate in our transparent monthly live draw and claim your prize."
     },
     cta_section: {
-        heading: "Your iPhone 17 Pro Is One Contribution Away",
+        heading: "Your iPhone 17 Pro Max Is One Contribution Away",
         desc: "Join thousands of members saving together and winning together. Your lucky number is waiting.",
         btn: "Join the Equb Today"
     },
@@ -79,8 +79,8 @@ export const TRANSLATIONS = {
         pay_telebirr: "Pay with Telebirr",
         history: "Recent Activity",
         next_draw: "NEXT DRAW IN 14 DAYS",
-        next_draw_today: "TODAY ONE LUCKY PERSON WILL TAKE THE IPHONE 17 PRO",
-        win_title: "Win an iPhone 17 Pro",
+        next_draw_today: "TODAY ONE LUCKY PERSON WILL TAKE THE IPHONE 17 PRO MAX",
+        win_title: "Win an iPhone 17 Pro Max",
         win_desc: "Make your contribution today to enter the draw. Verified members only.",
         btn_paid: "Contribution Paid",
         live_activity: "Live Activity",
@@ -132,11 +132,11 @@ export const TRANSLATIONS = {
             },
             {
                 heading: "6. Draw Process and Results",
-                content: "Draws are intended to be conducted using a transparent and random selection process. The specific method and timing of the draw may be published within the Service or through official announcements.\n\nEach draw cycle awards the grand prize, currently an iPhone 17 Pro, to one lucky winner. To the extent permitted by law, draw results recorded by the Service are final and binding, subject only to correction of clear technical or administrative errors."
+                content: "Draws are intended to be conducted using a transparent and random selection process. The specific method and timing of the draw may be published within the Service or through official announcements.\n\nEach draw cycle awards the grand prize, currently an iPhone 17 Pro Max, to one lucky winner. To the extent permitted by law, draw results recorded by the Service are final and binding, subject only to correction of clear technical or administrative errors."
             },
             {
                 heading: "7. Prizes and Prize Claims",
-                content: "Each draw cycle, one lucky winner receives the grand prize, currently an iPhone 17 Pro. Prize details, eligibility rules, and claim requirements will be provided through the Service or official communications. Winners may be required to complete identity verification and provide documentation before receiving a prize.\n\nIf a winner does not respond or complete required steps within a specified claim period, the prize may be forfeited and an alternate winner may be selected, where applicable."
+                content: "Each draw cycle, one lucky winner receives the grand prize, currently an iPhone 17 Pro Max. Prize details, eligibility rules, and claim requirements will be provided through the Service or official communications. Winners may be required to complete identity verification and provide documentation before receiving a prize.\n\nIf a winner does not respond or complete required steps within a specified claim period, the prize may be forfeited and an alternate winner may be selected, where applicable."
             },
             {
                 heading: "8. Prohibited Conduct",
@@ -232,11 +232,11 @@ export const TRANSLATIONS = {
         back: "ተመለስ",
     },
     nav: { home: "መነሻ", how: "እንዴት ይሰራል", join: "ይመዝገቡ", login: "ይግቡ", register: "ይመዝገቡ", logout: "ውጣ", dashboard: "ዳሽቦርድ", secure: "ደህንነቱ የተጠበቀ", profile: "ፕሮፋይል" },
-    hero: { subtitle: "እጣ ለመውጣት የቀረው ጊዜ:", subtitle_today: "ዛሬ አንድ እድለኛ ሰው አይፎን 17 ፕሮ ይረከባል", title1: "አብረው ይቆጥቡ።", title2: "አይፎን 17 ፕሮ ያሸንፉ።", desc: "አፍሮ እቁብ የኢትዮጵያን የተማመነ የእቁብ ባህል ከደህንነቱ ከተጠበቀ ዲጂታል ክፍያ ጋር ያጣምራል። በየወሩ ይዋጩ፣ እድለኛ ቁጥርዎን ይያዙ እና በግልጽ በሚተላለፍ የእጣ ሂደት አዲስ አይፎን 17 ፕሮ ያሸንፉ።", cta: "የእድለኛ ቁጥርዎን ዛሬ ይያዙ", watch: "ቪዲዮ ይመልከቱ", prize_name: "አይፎን 17 ፕሮ" },
+    hero: { subtitle: "እጣ ለመውጣት የቀረው ጊዜ:", subtitle_today: "ዛሬ አንድ እድለኛ ሰው አይፎን 17 ፕሮ ማክስ ይረከባል", title1: "አብረው ይቆጥቡ።", title2: "አይፎን 17 ፕሮ ማክስ ያሸንፉ።", desc: "አፍሮ እቁብ የኢትዮጵያን የተማመነ የእቁብ ባህል ከደህንነቱ ከተጠበቀ ዲጂታል ክፍያ ጋር ያጣምራል። በየወሩ ይዋጩ፣ እድለኛ ቁጥርዎን ይያዙ እና በግልጽ በሚተላለፍ የእጣ ሂደት አዲስ አይፎን 17 ፕሮ ማክስ ያሸንፉ።", cta: "የእድለኛ ቁጥርዎን ዛሬ ይያዙ", watch: "ቪዲዮ ይመልከቱ", prize_name: "አይፎን 17 ፕሮ ማክስ" },
     stats: { taken: "የተያዙ ቁጥሮች", lucky: "እድለኛ ቁጥሮች" },
     features: {
         heading_sub: "እንዴት ይሰራል",
-        heading_main: "ወደ አዲሱ አይፎን 17 ፕሮ የሚወስዱ",
+        heading_main: "ወደ አዲሱ አይፎን 17 ፕሮ ማክስ የሚወስዱ",
         heading_highlight: "ሶስት ደረጃዎች",
         desc: "ባህላዊውን የእቁብ ስርዓት ደህንነቱ የተጠበቀ፣ ግልጽ እና ከየትኛውም ቦታ ሆነው በቀላሉ የሚሳተፉበት አድርገን ዘምነነዋል።",
         step1_title: "ይመዝገቡ እና ያረጋግጡ",
@@ -247,7 +247,7 @@ export const TRANSLATIONS = {
         step3_desc: "በየወሩ በሚካሄደው ግልጽ የእጣ አወጣጥ ላይ ይሳተፉ እና ሽልማትዎን ይቀበሉ።"
     },
     cta_section: {
-        heading: "አይፎን 17 ፕሮዎ በአንድ ክፍያ ርቀት ላይ ነው",
+        heading: "አይፎን 17 ፕሮ ማክስዎ በአንድ ክፍያ ርቀት ላይ ነው",
         desc: "አብረው የሚቆጥቡ እና አብረው የሚያሸንፉ በሺዎች የሚቆጠሩ አባላትን ይቀላቀሉ። የእድለኛ ቁጥርዎ ይጠብቅዎታል።",
         btn: "እቁቡን አሁኑኑ ይቀላቀሉ"
     },
@@ -305,8 +305,8 @@ export const TRANSLATIONS = {
         pay_telebirr: "በቴሌብር ይክፈሉ",
         history: "የቅርብ ጊዜ እንቅስቃሴዎች",
         next_draw: "የእጣ ቀን የቀረው ጊዜ: 14 ቀናት",
-        next_draw_today: "ዛሬ አንድ እድለኛ ሰው አይፎን 17 ፕሮ ይረከባል",
-        win_title: "አይፎን 17 ፕሮ ያሸንፉ",
+        next_draw_today: "ዛሬ አንድ እድለኛ ሰው አይፎን 17 ፕሮ ማክስ ይረከባል",
+        win_title: "አይፎን 17 ፕሮ ማክስ ያሸንፉ",
         win_desc: "በእጣው ለመሳተፍ ክፍያዎን ዛሬውኑ ይፈጽሙ። የተረጋገጡ አባላት ብቻ።",
         btn_paid: "ክፍያ ተፈጽሟል",
         live_activity: "የቀጥታ እንቅስቃሴ",
@@ -358,11 +358,11 @@ export const TRANSLATIONS = {
             },
             {
                 heading: "6. የእጣ ሂደት እና ውጤት",
-                content: "እጣው በግልጽ እና በዘፈቀደ መንገድ እንዲካሄድ ይታሰባል። የእጣ ዘዴ እና ጊዜ በመተግበሪያው ውስጥ ወይም በይፋ ማስታወቂያ ሊገለጽ ይችላል።\n\nበእያንዳንዱ የእጣ ዙር ዋናው ሽልማት (በአሁኑ ጊዜ አይፎን 17 ፕሮ) ለአንድ እድለኛ አሸናፊ ይሰጣል። ህግ በሚፈቅደው መጠን ውስጥ በአገልግሎቱ የተመዘገበ ውጤት የመጨረሻ ነው፣ ከግልጽ ቴክኒካዊ ወይም አስተዳደራዊ ስህተት ማስተካከል በስተቀር።"
+                content: "እጣው በግልጽ እና በዘፈቀደ መንገድ እንዲካሄድ ይታሰባል። የእጣ ዘዴ እና ጊዜ በመተግበሪያው ውስጥ ወይም በይፋ ማስታወቂያ ሊገለጽ ይችላል።\n\nበእያንዳንዱ የእጣ ዙር ዋናው ሽልማት (በአሁኑ ጊዜ አይፎን 17 ፕሮ ማክስ) ለአንድ እድለኛ አሸናፊ ይሰጣል። ህግ በሚፈቅደው መጠን ውስጥ በአገልግሎቱ የተመዘገበ ውጤት የመጨረሻ ነው፣ ከግልጽ ቴክኒካዊ ወይም አስተዳደራዊ ስህተት ማስተካከል በስተቀር።"
             },
             {
                 heading: "7. ሽልማቶች እና ሽልማት መቀበል",
-                content: "በእያንዳንዱ የእጣ ዙር አንድ እድለኛ አሸናፊ ዋናውን ሽልማት ይቀበላል፣ በአሁኑ ጊዜ አይፎን 17 ፕሮ። የሽልማቱ ዝርዝሮች፣ የብቁነት መመሪያዎች እና የማረጋገጫ መስፈርቶች በመተግበሪያው ውስጥ ወይም በይፋ ግንኙነት ይገለጻሉ። አሸናፊዎች ማንነት ማረጋገጫ ማቅረብ ሊያስፈልጋቸው ይችላል።\n\nበተወሰነ ጊዜ ውስጥ ካልተገናኙ ወይም የሚያስፈልጉ እርምጃዎችን ካላጠናቀቁ ሽልማቱ ሊሰረዝ እና ሌላ አሸናፊ ሊመረጥ ይችላል።"
+                content: "በእያንዳንዱ የእጣ ዙር አንድ እድለኛ አሸናፊ ዋናውን ሽልማት ይቀበላል፣ በአሁኑ ጊዜ አይፎን 17 ፕሮ ማክስ። የሽልማቱ ዝርዝሮች፣ የብቁነት መመሪያዎች እና የማረጋገጫ መስፈርቶች በመተግበሪያው ውስጥ ወይም በይፋ ግንኙነት ይገለጻሉ። አሸናፊዎች ማንነት ማረጋገጫ ማቅረብ ሊያስፈልጋቸው ይችላል።\n\nበተወሰነ ጊዜ ውስጥ ካልተገናኙ ወይም የሚያስፈልጉ እርምጃዎችን ካላጠናቀቁ ሽልማቱ ሊሰረዝ እና ሌላ አሸናፊ ሊመረጥ ይችላል።"
             },
             {
                 heading: "8. የተከለከለ አጠቃቀም",
@@ -456,8 +456,8 @@ export const TRANSLATIONS = {
 };
 
 export const PRIZE_IMAGES = [
-  "/images/iphone1.png",
-  "/images/iphone2.png"
+  "/images/iphone1.jpg",
+  "/images/iphone2.jpg"
 ];
 
 export const DEFAULT_SETTINGS : AppSettings = {
@@ -470,7 +470,7 @@ export const DEFAULT_SETTINGS : AppSettings = {
   drawDate: new Date(new Date().setDate(new Date().getDate() + 14)).toISOString().split('T')[0],
   iphonesDelivered: 142,
   trustScore: 100,
-  prizeName: 'iPhone 17 Pro',
+  prizeName: 'iPhone 17 Pro Max',
   prizeValue: '1,199 USD',
   prizeImage: PRIZE_IMAGES[0],
   prizeImages: PRIZE_IMAGES, // Initialize with constant values
@@ -485,8 +485,8 @@ export const DEFAULT_SETTINGS : AppSettings = {
       id: 1,
       name: "Dawit M.",
       nameAm: "ዳዊት መ.",
-      prize: "iPhone 17 Pro",
-      prizeAm: "አይፎን 17 ፕሮ",
+      prize: "iPhone 17 Pro Max",
+      prizeAm: "አይፎን 17 ፕሮ ማክስ",
       cycle: "Tir (Jan)",
       cycleAm: "ጥር",
       location: "Addis Ababa",
@@ -496,8 +496,8 @@ export const DEFAULT_SETTINGS : AppSettings = {
       id: 2,
       name: "Sara T.",
       nameAm: "ሳራ ት.",
-      prize: "iPhone 17 Pro",
-      prizeAm: "አይፎን 17 ፕሮ",
+      prize: "iPhone 17 Pro Max",
+      prizeAm: "አይፎን 17 ፕሮ ማክስ",
       cycle: "Tahsas (Dec)",
       cycleAm: "ታህሳስ",
       location: "Adama",

@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 1000 tickets
-        for ($i = 1; $i <= 1000; $i++) {
+        // Create 2000 tickets
+        for ($i = 1; $i <= 2000; $i++) {
             Ticket::create([
                 'ticketNumber' => $i,
                 'status' => 'AVAILABLE',
@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
             'days_remaining' => 7,
             'draw_date' => now()->addDays(7),
 
-            'prize_name' => 'iPhone 17 Pro',
+            'prize_name' => 'iPhone 17 Pro Max',
             'prize_value' => '1,199 USD',
-            'prize_image' => 'images/iphone1.png',
+            'prize_image' => 'images/iphone1.jpg',
             'prize_images' => [
-                'images/iphone1.png',
-                'images/iphone2.png',
+                'images/iphone1.jpg',
+                'images/iphone2.jpg',
             ],
 
             'live_stream_url' => 'https://youtube.com/live/example',

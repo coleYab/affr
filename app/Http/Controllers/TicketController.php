@@ -31,7 +31,7 @@ class TicketController extends Controller
             ->get(['id', 'ticketNumber', 'status', 'reservedAt', 'paymentId']);
 
         return Inertia::render('dashboard', [
-            'ticketBoard' => $this->ticketBoard($request, forcePerPage: $request->routeIs('dashboard') ? 1500 : null),
+            'ticketBoard' => $this->ticketBoard($request, forcePerPage: $request->routeIs('dashboard') ? 2000 : null),
             'userSummary' => [
                 'id' => $user->id,
                 'name' => $user->name,

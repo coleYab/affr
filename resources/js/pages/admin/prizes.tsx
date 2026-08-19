@@ -39,21 +39,21 @@ export default function Settings() {
                 userName: 'Dawit Mekonnen',
                 ticketNumber: 4512,
                 cycle: 18,
-                prizeName: 'iPhone 17 Pro',
+                prizeName: 'iPhone 17 Pro Max',
             },
             {
                 userId: 33,
                 userName: 'Sara Tesfaye',
                 ticketNumber: 8731,
                 cycle: 18,
-                prizeName: 'iPhone 17 Pro',
+                prizeName: 'iPhone 17 Pro Max',
             },
             {
                 userId: 51,
                 userName: 'Solomon Ayele',
                 ticketNumber: 2204,
                 cycle: 17,
-                prizeName: 'iPhone 17 Pro',
+                prizeName: 'iPhone 17 Pro Max',
             },
         ];
     }, []);
@@ -541,7 +541,7 @@ export default function Settings() {
                                                     })
                                                 }
                                                 className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:border-royal focus:ring-royal sm:px-4"
-                                                placeholder="iPhone 17 Pro"
+                                                placeholder="iPhone 17 Pro Max"
                                             />
                                         </div>
                                         <div className="col-span-1">

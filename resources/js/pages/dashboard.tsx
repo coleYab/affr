@@ -485,15 +485,6 @@ export default function Dashboard() {
                                         </div>
                                         <div className="space-y-4">
                                             <div className="text-center md:text-left">
-                                                <div className="mb-3 inline-block rounded-full border border-royal/20 bg-royal/10 px-4 py-1 text-xs font-bold text-royal">
-                                                    {settings.daysRemaining ===
-                                                    0
-                                                        ? t.next_draw_today
-                                                        : t.next_draw.replace(
-                                                              '14',
-                                                              settings.daysRemaining.toString(),
-                                                          )}
-                                                </div>
                                                 <h2 className="mb-2 text-3xl leading-tight font-extrabold text-navy">
                                                     {t.win_title}
                                                 </h2>
