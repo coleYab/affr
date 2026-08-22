@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\AdminNotificationStoreRequest;
 use App\Http\Requests\Admin\AdminSettingsUpdateRequest;
 use App\Http\Requests\Admin\AdminUserStoreRequest;
+use App\Http\Requests\Admin\AdminUserTicketsStoreRequest;
 use App\Models\AppNotification;
 use App\Models\AppSetting;
 use App\Models\Payments;
@@ -130,6 +131,32 @@ class AppSettingsController extends Controller
         return redirect()
             ->route('admin.users')
             ->with('status', 'User created successfully.');
+    }
+
+    public function usersTicketsStore(User $user, AdminUserTicketsStoreRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+
+        DB::transaction(function () use ($user, $data): void {
+            $ticketsToAssign = Ticket::query()
+                ->whereIn('ticketNumber', $data['ticketNumbers'])
+                ->where('status', 'AVAILABLE')
+                ->lockForUpdate()
+                ->get();
+
+            foreach ($ticketsToAssign as $ticket) {
+                $ticket->forceFill([
+                    'userId' => $user->id,
+                    'paymentId' => null,
+                    'reservedAt' => now(),
+                    'status' => 'SOLD',
+                ])->save();
+            }
+        });
+
+        return redirect()
+            ->route('admin.users')
+            ->with('status', 'Tickets added successfully.');
     }
 
     public function usersDestroy(User $user): RedirectResponse

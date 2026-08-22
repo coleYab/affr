@@ -60,6 +60,7 @@ Route::prefix('admin')
         Route::get('users', [AppSettingsController::class, 'user'])->name('admin.users');
         Route::post('users', [AppSettingsController::class, 'usersStore'])->name('admin.users.store');
         Route::delete('users/{user}', [AppSettingsController::class, 'usersDestroy'])->name('admin.users.destroy');
+        Route::post('users/{user}/tickets', [AppSettingsController::class, 'usersTicketsStore'])->name('admin.users.tickets.store');
         Route::get('prize', [AppSettingsController::class, 'prize'])->name('admin.prize');
         Route::get('cycle', [AppSettingsController::class, 'cycle'])->name('admin.cycle');
         Route::get('dashboard', [AppSettingsController::class, 'dashboard'])->name('admin.dashboard');
