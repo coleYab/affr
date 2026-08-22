@@ -16,6 +16,7 @@ class Payments extends Model
         'amount',
         'receiptUrl',
         'requestedTicket',
+        'status',
     ];
 
     public function user()

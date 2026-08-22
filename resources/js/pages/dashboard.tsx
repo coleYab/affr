@@ -90,6 +90,42 @@ export default function Dashboard() {
         //     ? settings.prizeImages
         //     : PRIZE_IMAGES;
 
+    // Deep-link support: ?ticket=N, tgWebAppStartParam or Telegram start_param
+    const deepLinkTicket = useMemo(() => {
+        if (typeof window === 'undefined') {
+            return null;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const raw =
+            params.get('ticket') ??
+            params.get('tgWebAppStartParam') ??
+            window.Telegram?.WebApp?.initDataUnsafe?.start_param ??
+            '';
+        const value = Number(raw);
+
+        return Number.isInteger(value) && value > 0 ? value : null;
+    }, []);
+
+    useEffect(() => {
+        if (!deepLinkTicket || !settings.ticketSelectionEnabled) {
+            return;
+        }
+
+        const ticket = tickets.find((t) => t.number === deepLinkTicket);
+
+        if (!ticket || ticket.taken) {
+            return;
+        }
+
+        setSelectedTempTicket(deepLinkTicket);
+        setShowTicketModal(true);
+        setLuckySearch(deepLinkTicket.toString());
+        setLuckyStatus('AVAILABLE');
+
+        window.history.replaceState({}, '', window.location.pathname);
+    }, [deepLinkTicket, settings.ticketSelectionEnabled, tickets]);
+
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
