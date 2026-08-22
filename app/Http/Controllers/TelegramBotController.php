@@ -81,7 +81,7 @@ class TelegramBotController extends Controller
      * Reserve a ticket from the bot.
      *
      * POST /api/bot/ticket/reserve
-     * Body: { telegram_id: int, ticket_number: int, bot_token: string, first_name?: string, username?: string }
+     * Body: { telegram_id: int, ticket_number: int, bot_token: string, first_name?: string, username?: string, phone?: string }
      */
     public function reserveTicket(Request $request): JsonResponse
     {
@@ -91,6 +91,7 @@ class TelegramBotController extends Controller
             'bot_token' => 'required|string',
             'first_name' => 'nullable|string|max:255',
             'username' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:50',
         ]);
 
         if (! $this->verifyBotToken($validated['bot_token'])) {
@@ -117,6 +118,7 @@ class TelegramBotController extends Controller
                         'email_verified_at' => now(),
                         'telegram_id' => $validated['telegram_id'],
                         'telegram_username' => $validated['username'] ?? null,
+                        'phoneNumber' => $validated['phone'] ?? null,
                     ]);
                 }
 
@@ -133,10 +135,11 @@ class TelegramBotController extends Controller
                     ], 409);
                 }
 
+                $phone = $validated['phone'] ?? $user->phoneNumber ?? '';
                 $payment = \App\Models\Payments::create([
                     'userId' => $user->id,
                     'userName' => $user->name,
-                    'userPhone' => $user->phoneNumber ?? '',
+                    'userPhone' => $phone,
                     'amount' => 500,
                     'requestedTicket' => $validated['ticket_number'],
                     'receiptUrl' => null,
